@@ -47,7 +47,12 @@ public class Step01VariableTest extends PlainTestCase {
         String piari = null;
         String dstore = "mai";
         sea = sea + land + piari + ":" + dstore;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => mystic8:mai -> mystic8null:mai
+        /**
+         * String型にnullが入っている場合、そのままnullが出てくる
+         * piariのみ関数に引き渡した場合もnullとでたので結合有無は関係ない
+         */
+
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -56,7 +61,7 @@ public class Step01VariableTest extends PlainTestCase {
         String land = "oneman";
         sea = land;
         land = land + "'s dreams";
-        log(sea); // your answer? => 
+        log(sea); // your answer? => oneman
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -65,7 +70,7 @@ public class Step01VariableTest extends PlainTestCase {
         int land = 415;
         sea = land;
         land++;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 415
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -75,7 +80,11 @@ public class Step01VariableTest extends PlainTestCase {
         sea = land;
         sea = land.add(new BigDecimal(1));
         sea.add(new BigDecimal(1));
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 417 -> 416
+        /**
+         * sea.add はsea自体にその値を加えて変数自体を更新するのではなく、
+         * 変数にaddした結果を返しているだけで更新されないから、82行目の結果を拾っていないので416
+         */
     }
 
     // ===================================================================================
@@ -89,19 +98,31 @@ public class Step01VariableTest extends PlainTestCase {
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_String() {
         String sea = instanceBroadway;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "" -> null
+        /**
+         * 初期化されていないString型の変数はnullになる
+         */
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_int() {
         int sea = instanceDockside;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => null -> 0
+        /**
+         * int型はnullではなく初期値は0になるらしい
+         * これは、intはプリミティブ型だから
+         * プリミティブ型の反対は参照型
+         * プリミティブ型はint やboolean やlong など
+         */
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_Integer() {
         Integer sea = instanceHangar;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => null
+        /**
+         * こいつは参照型
+         */
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -110,7 +131,12 @@ public class Step01VariableTest extends PlainTestCase {
         instanceMagiclamp = "magician";
         helpInstanceVariableViaMethod(instanceMagiclamp);
         String sea = instanceBroadway + "|" + instanceDockside + "|" + instanceHangar + "|" + instanceMagiclamp;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => bbb|0|null|magician -> bigband|1|null|magician
+        /**
+         * instanceBroadwayはメソッド内のローカル変数ではなくって、クラスに定義されている
+         * それをhelpInstanceVariableViaMethodによって書き換えている
+         *instanceMagiclampはhelpInstanceVariableViaMethodの引数になっているためそっちが優先的に扱われた？
+         */
     }
 
     private void helpInstanceVariableViaMethod(String instanceMagiclamp) {
@@ -130,13 +156,13 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "harbor";
         int land = 415;
         helpMethodArgumentImmutableMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor
     }
 
     private void helpMethodArgumentImmutableMethodcall(String sea, int land) {
         ++land;
         String landStr = String.valueOf(land); // is "416"
-        sea.concat(landStr);
+        sea.concat(landStr); //これまたseaに渡してるわけじゃないからひっかけでは
     }
 
     // -----------------------------------------------------
@@ -147,11 +173,17 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor416
+        /**
+         * StringBulderはStringとは違うと大学で習ったのを思い出した
+         * https://qiita.com/dr_tensyo/items/bfe0341c4ec3103159c6
+         * https://it-biz.online/java/java-stringbuilder/#toc1
+         * 参照先を代入しているのかの違い
+         */
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
-        ++land;
+        ++land; //416
         sea.append(land);
     }
 
@@ -163,13 +195,13 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentVariable(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor
     }
 
     private void helpMethodArgumentVariable(StringBuilder sea, int land) {
         ++land;
-        String seaStr = sea.toString(); // is "harbor"
-        sea = new StringBuilder(seaStr).append(land);
+        String seaStr = sea.toString(); // is "harbor" String型（参照型が返ってくる）
+        sea = new StringBuilder(seaStr).append(land); //これまた引数のseaに代入されている。返してない
     }
 
     // ===================================================================================
@@ -191,8 +223,12 @@ public class Step01VariableTest extends PlainTestCase {
      * o すべての変数をlog()でカンマ区切りの文字列で表示
      * </pre>
      */
+    private int piari;
     public void test_variable_writing() {
         // define variables here
+        String sea = "mystic";
+        Integer land = null;
+        log(sea, land, piari);
     }
 
     // ===================================================================================
@@ -204,11 +240,21 @@ public class Step01VariableTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     *  instanceBroadway;
+     *  instanceDockside;
+     *  instanceHangar;
+     *  instanceMagiclamp;
+     *  それぞれに任意の値を代入してlog()で出力する
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
+
     public void test_variable_yourExercise() {
         // write your code here
+        instanceBroadway = "hogehoge";
+        instanceDockside = 1200;
+        instanceHangar = 1234;
+        instanceMagiclamp = "mystic";
+        log(instanceBroadway, instanceDockside, instanceHangar, instanceMagiclamp);
     }
 }
