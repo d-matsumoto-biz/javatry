@@ -52,7 +52,10 @@ public class Step01VariableTest extends PlainTestCase {
          * String型にnullが入っている場合、そのままnullが出てくる
          * piariのみ関数に引き渡した場合もnullとでたので結合有無は関係ない
          */
-
+        // TODO matsumoto [いいね] 実験もしてて素晴らしい。javatryをぜひコードの実験場に^^ by jflute (2026/07/29)
+        // log()メソッドでnullを渡して "null" と表示されるのは、またちょっと仕組み(経路)が違ったりはします。
+        // log()の場合は StringBuilderのappend()の引数にnullを渡して "null" になります。
+        // +によるnullの連結と同じ挙動になるように合わせているのだと思われます。
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -62,6 +65,7 @@ public class Step01VariableTest extends PlainTestCase {
         sea = land;
         land = land + "'s dreams";
         log(sea); // your answer? => oneman
+        // TODO jflute 1on1にて、変数とインスタンスについてフォロー予定 (2026/07/29)
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -85,6 +89,9 @@ public class Step01VariableTest extends PlainTestCase {
          * sea.add はsea自体にその値を加えて変数自体を更新するのではなく、
          * 変数にaddした結果を返しているだけで更新されないから、82行目の結果を拾っていないので416
          */
+        // TODO matsumoto [いいね] yes, 自分自身のインスタンスを状態は更新しないわけですね。 by jflute (2026/07/29)
+        // BigDecimalはimmutableなクラスとして実装されているので、このようなスタイルのメソッドになります。
+        // TODO jflute 1on1にてimmutableのお話をする予定 (2026/07/29)
     }
 
     // ===================================================================================
@@ -137,6 +144,9 @@ public class Step01VariableTest extends PlainTestCase {
          * それをhelpInstanceVariableViaMethodによって書き換えている
          *instanceMagiclampはhelpInstanceVariableViaMethodの引数になっているためそっちが優先的に扱われた？
          */
+        // TODO matsumoto [ふぉろー] クラスに定義されているinstanceMagiclamp (インスタンス変数) と... by jflute (2026/07/29)
+        // helpの引数変数としてのinstanceMagiclamp は、同じ名前が付いているけど別物(別の変数、別の箱)です。
+        // helpメソッド内では、同名の変数が同じにスコープに存在することになりますが、スコープ的に近い方が優先されます。
     }
 
     private void helpInstanceVariableViaMethod(String instanceMagiclamp) {
@@ -163,6 +173,7 @@ public class Step01VariableTest extends PlainTestCase {
         ++land;
         String landStr = String.valueOf(land); // is "416"
         sea.concat(landStr); //これまたseaに渡してるわけじゃないからひっかけでは
+        // TODO matsumoto [いいね] ひっかけごめんなさいm(_ _)m by jflute (2026/07/29)
     }
 
     // -----------------------------------------------------
@@ -180,6 +191,10 @@ public class Step01VariableTest extends PlainTestCase {
          * https://it-biz.online/java/java-stringbuilder/#toc1
          * 参照先を代入しているのかの違い
          */
+        // TODO matsumoto [いいね] 記事の通り、全くの別物ではあります(^^ by jflute (2026/07/29)
+        // 基礎的で安全性を優先してimmutableである String に対して、
+        // パフォーマンスを優先してmutableなStringBuilderという感じです。
+        // どちらも「文字列」を扱う似た概念のクラスですが、コンセプトが違うことで使い方がガラリと変わります。
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
@@ -224,6 +239,7 @@ public class Step01VariableTest extends PlainTestCase {
      * </pre>
      */
     private int piari;
+
     public void test_variable_writing() {
         // define variables here
         String sea = "mystic";
