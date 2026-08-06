@@ -52,7 +52,7 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 7;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -60,14 +60,14 @@ public class Step02IfForTest extends PlainTestCase {
         int sea = 904;
         if (sea > 904) {
             sea = 2001;
-        } else if (sea >= 904) {
+        } else if (sea >= 904) { //ここでTrueになるから以降は飛ぶ
             sea = 7;
         } else if (sea >= 903) {
             sea = 8;
         } else {
             sea = 9;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -77,37 +77,37 @@ public class Step02IfForTest extends PlainTestCase {
         if (sea > 904) {
             sea = 2001;
             sea = sea++ * 2;
-        } else if (land && sea >= 904) {
+        } else if (land && sea >= 904) { // land = false で and 条件だからFalse
             sea = 7;
             sea = ++sea * 2;
-        } else if (sea >= 903 || land) {
-            if (sea % 2 == 0) {
-                sea = sea++ * 2;
+        } else if (sea >= 903 || land) { // sea >= 903 で or だから True
+            if (sea % 2 == 0) { // True
+                sea = sea++ * 2; // 905 * 2 = 1810
             }
-            if (!land) {
-                land = true;
+            if (!land) { // True
+                land = true; // True
             } else if (sea <= 903) {
                 sea++;
             }
-            if (sea < 1810) {
+            if (sea < 1810) { // False
                 sea = 8;
             }
-        } else if (sea == 8) {
+        } else if (sea == 8) { // 上でTrueだから通らない
             sea++;
             land = false;
-        } else {
+        } else { // 上でTrueだから通らない
             sea = 9;
         }
-        if (sea >= 9 || (sea > 7 && sea < 9)) {
-            sea--;
+        if (sea >= 9 || (sea > 7 && sea < 9)) { // sea >= 9 でTrue
+            sea--; // 1809
             if (sea % 2 == 1) {
-                sea++;
+                sea++; // 1810
             }
         }
-        if (land) {
-            sea = 10;
+        if (land) { // True
+            sea = 10; // 10
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 10
     }
 
     // ===================================================================================
@@ -115,15 +115,15 @@ public class Step02IfForTest extends PlainTestCase {
     //                                                                       =============
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_for_inti_basic() {
-        List<String> stageList = prepareStageList();
+        List<String> stageList = prepareStageList(); //size 4
         String sea = null;
         for (int i = 0; i < stageList.size(); i++) {
             String stage = stageList.get(i);
             if (i == 1) {
-                sea = stage;
+                sea = stage; // dockside
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => dockside
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -131,9 +131,9 @@ public class Step02IfForTest extends PlainTestCase {
         List<String> stageList = prepareStageList();
         String sea = null;
         for (String stage : stageList) {
-            sea = stage;
+            sea = stage; // magiclamp
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => magiclamp
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -141,31 +141,31 @@ public class Step02IfForTest extends PlainTestCase {
         List<String> stageList = prepareStageList();
         String sea = null;
         for (String stage : stageList) {
-            if (stage.startsWith("br")) {
+            if (stage.startsWith("br")) { // broadway が引っかかってcontinueで上に戻る
                 continue;
             }
             sea = stage;
-            if (stage.contains("ga")) {
+            if (stage.contains("ga")) { // hangarが引っかかってbreakでforを抜ける
                 break;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => hangar
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_for_listforeach_basic() {
         List<String> stageList = prepareStageList();
         StringBuilder sb = new StringBuilder();
-        stageList.forEach(stage -> {
-            if (sb.length() > 0) {
+        stageList.forEach(stage -> { //全ての要素に対して適用するやつ
+            if (sb.length() > 0) { // ≒文字が入ったら抜ける  docksideが入ったらここに入る
                 return;
             }
             if (stage.contains("i")) {
-                sb.append(stage);
+                sb.append(stage);// dockside
             }
         });
         String sea = sb.toString();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => dockside
     }
 
     // ===================================================================================
@@ -176,7 +176,21 @@ public class Step02IfForTest extends PlainTestCase {
      * (prepareStageList()のリストから "a" が含まれているものだけのリストを作成して、それをループで回してログに表示しましょう。(Stream APIなしで))
      */
     public void test_iffor_making() {
+        List<String> stageList = prepareStageList();
+        List<String> result = new ArrayList<>();
+        for(String stage :stageList){
+            if (stage.contains("a")){
+                result.add(stage);
+            }
+            log(result);
+        }
         // write if-for here
+        /**
+         *             [broadway]
+         *             [broadway]
+         *             [broadway, hangar]
+         *             [broadway, hangar, magiclamp]
+         */
     }
 
     // ===================================================================================
@@ -194,11 +208,11 @@ public class Step02IfForTest extends PlainTestCase {
                 continue;
             }
             sea = stage;
-            if (stage.contains("ga")) {
+            if (stage.contains("ga")) { // hangar が引っかかる
                 break;
             }
         }
-        log(sea); // should be same as before-fix
+        log(sea); // hangar
     }
 
     /**
@@ -207,12 +221,19 @@ public class Step02IfForTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     * どんな挙動をするコードでしょうか
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
     public void test_iffor_yourExercise() {
-        // write your code here
+        List<String> stageList = prepareStageList();
+        for(String stage : stageList){
+            if(stage.contains("i")){
+                log(stage.toUpperCase());
+            }else {
+                log(stage);
+            }
+        }
     }
 
     // ===================================================================================
