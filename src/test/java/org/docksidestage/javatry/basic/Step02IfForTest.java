@@ -108,6 +108,8 @@ public class Step02IfForTest extends PlainTestCase {
             sea = 10; // 10
         }
         log(sea); // your answer? => 10
+
+        // TODO jflute 次回1on1にて、漠然読みの話 (2026/08/09)
     }
 
     // ===================================================================================
@@ -166,6 +168,8 @@ public class Step02IfForTest extends PlainTestCase {
         });
         String sea = sb.toString();
         log(sea); // your answer? => dockside
+
+        // TODO jflute 次回1on1にて、for文とforEach()メソッドの違いについて (2026/08/09)
     }
 
     // ===================================================================================
@@ -178,8 +182,8 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_making() {
         List<String> stageList = prepareStageList();
         List<String> result = new ArrayList<>();
-        for(String stage :stageList){
-            if (stage.contains("a")){
+        for (String stage : stageList) {
+            if (stage.contains("a")) {
                 result.add(stage);
             }
             log(result);
@@ -213,6 +217,7 @@ public class Step02IfForTest extends PlainTestCase {
             }
         }
         log(sea); // hangar
+        // TODO matsumoto このエクササイズ、"置き換えてみましょう" なので書き問題です by jflute (2026/08/09)
     }
 
     /**
@@ -227,13 +232,14 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_yourExercise() {
         List<String> stageList = prepareStageList();
-        for(String stage : stageList){
-            if(stage.contains("i")){
+        for (String stage : stageList) {
+            if (stage.contains("i")) {
                 log(stage.toUpperCase());
-            }else {
+            } else {
                 log(stage);
             }
         }
+        // TODO matsumoto [いいね] forとifの挙動の理解が問われる良いエクササイズですね^^ by jflute (2026/08/09)
     }
 
     // ===================================================================================

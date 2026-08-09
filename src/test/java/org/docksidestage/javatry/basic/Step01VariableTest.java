@@ -105,7 +105,7 @@ public class Step01VariableTest extends PlainTestCase {
          */
         // done matsumoto [いいね] yes, 自分自身のインスタンスを状態は更新しないわけですね。 by jflute (2026/07/29)
         // BigDecimalはimmutableなクラスとして実装されているので、このようなスタイルのメソッドになります。
-        // TODO jflute 1on1にてimmutableのお話をする予定 (2026/07/29)
+        // TODO jflute 次回1on1にてimmutableのお話をする予定 (2026/07/29)
         // #1on1: BigDecimalのソースコードリーディングしてみた (2026/07/29)
         // よもやま話: ソースコードリーディングのコツ。構造に着目して、知りたいことを効率よく知る。
     }
@@ -212,7 +212,7 @@ public class Step01VariableTest extends PlainTestCase {
         // 基礎的で安全性を優先してimmutableである String に対して、
         // パフォーマンスを優先してmutableなStringBuilderという感じです。
         // どちらも「文字列」を扱う似た概念のクラスですが、コンセプトが違うことで使い方がガラリと変わります。
-        // TODO jflute 1on1にて (2026/07/29)
+        // TODO jflute 次回1on1にてimmutable/mutable (2026/07/29)
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
