@@ -207,17 +207,24 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
         String sea = null;
-        for (String stage : stageList) {
-            if (stage.startsWith("br")) {
-                continue;
-            }
-            sea = stage;
-            if (stage.contains("ga")) { // hangar が引っかかる
-                break;
-            }
-        }
-        log(sea); // hangar
+        stageList.forEach(stage -> {
+            if(stage.startsWith("br"))
+                return;
+            if(stage.contains("ga"))
+                log(stage);
+        });
+//        for (String stage : stageList) {
+//            if (stage.startsWith("br")) {
+//                continue;
+//            }
+//            sea = stage;
+//            if (stage.contains("ga")) { // hangar が引っかかる
+//                break;
+//            }
+//        }
+//        log(sea); // hangar
         // TODO matsumoto このエクササイズ、"置き換えてみましょう" なので書き問題です by jflute (2026/08/09)
+        // 修正しましたが、seaの型を変えたりしないと全く一緒の動きにはならなそうです、、
     }
 
     /**
