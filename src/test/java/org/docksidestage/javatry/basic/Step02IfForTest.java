@@ -109,7 +109,12 @@ public class Step02IfForTest extends PlainTestCase {
         }
         log(sea); // your answer? => 10
 
-        // TODO jflute 次回1on1にて、漠然読みの話 (2026/08/09)
+        // done jflute 次回1on1にて、漠然読みの話 (2026/08/09)
+        // o 漠然読みで、まず構造だけを理解して全体像を把握
+        //  → すると、自然と当たりが見えてくる (ギャンブルしたくなる箇所が見つかる)
+        // o 当たりを付けてフォーカス読み
+        //  → ギャンブルに負けることもある。でも損はしない。
+        //  → ある程度踏み込んでコード把握したことで、改めて上から読んでいっても0の状態よりは速い
     }
 
     // ===================================================================================
@@ -170,6 +175,7 @@ public class Step02IfForTest extends PlainTestCase {
         log(sea); // your answer? => dockside
 
         // TODO jflute 次回1on1にて、for文とforEach()メソッドの違いについて (2026/08/09)
+        // (書き換えエクササイズをやってもらってからフォローすることにする)
     }
 
     // ===================================================================================
@@ -208,23 +214,24 @@ public class Step02IfForTest extends PlainTestCase {
         List<String> stageList = prepareStageList();
         String sea = null;
         stageList.forEach(stage -> {
-            if(stage.startsWith("br"))
+            if (stage.startsWith("br"))
                 return;
-            if(stage.contains("ga"))
+            if (stage.contains("ga"))
                 log(stage);
         });
-//        for (String stage : stageList) {
-//            if (stage.startsWith("br")) {
-//                continue;
-//            }
-//            sea = stage;
-//            if (stage.contains("ga")) { // hangar が引っかかる
-//                break;
-//            }
-//        }
-//        log(sea); // hangar
+        //        for (String stage : stageList) {
+        //            if (stage.startsWith("br")) {
+        //                continue;
+        //            }
+        //            sea = stage;
+        //            if (stage.contains("ga")) { // hangar が引っかかる
+        //                break;
+        //            }
+        //        }
+        //        log(sea); // hangar
         // TODO matsumoto このエクササイズ、"置き換えてみましょう" なので書き問題です by jflute (2026/08/09)
         // 修正しましたが、seaの型を変えたりしないと全く一緒の動きにはならなそうです、、
+        // TODO matsumoto [へんじ] seaの型は変えてもOKで、コンソールに出てくる結果が同じになればOK by jflute (2026/08/10)
     }
 
     /**
@@ -246,7 +253,7 @@ public class Step02IfForTest extends PlainTestCase {
                 log(stage);
             }
         }
-        // TODO matsumoto [いいね] forとifの挙動の理解が問われる良いエクササイズですね^^ by jflute (2026/08/09)
+        // done matsumoto [いいね] forとifの挙動の理解が問われる良いエクササイズですね^^ by jflute (2026/08/09)
     }
 
     // ===================================================================================

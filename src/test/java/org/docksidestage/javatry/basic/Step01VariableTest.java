@@ -105,9 +105,40 @@ public class Step01VariableTest extends PlainTestCase {
          */
         // done matsumoto [いいね] yes, 自分自身のインスタンスを状態は更新しないわけですね。 by jflute (2026/07/29)
         // BigDecimalはimmutableなクラスとして実装されているので、このようなスタイルのメソッドになります。
-        // TODO jflute 次回1on1にてimmutableのお話をする予定 (2026/07/29)
+        // done jflute 次回1on1にてimmutableのお話をする予定 (2026/07/29)
         // #1on1: BigDecimalのソースコードリーディングしてみた (2026/07/29)
         // よもやま話: ソースコードリーディングのコツ。構造に着目して、知りたいことを効率よく知る。
+        // #1on1: immutableとは？ (2026/08/10)
+        // immutableという言葉、あんまり使ってない by まつもとさん
+        // immutable (不変な), mutable (可変な)
+        // o immutable なクラス(インスタンス) // default
+        // o immutable な変数
+        // 
+        // immutableのメリット/デメリット
+        // o メリット: 値が変わらないことが保証される
+        //  → (学生時代に)並列処理などで値が変わっちゃうのを防げる!? by まつもとさん
+        //  → 安全性 (値を変えちゃいけないものが変わらないので安心)
+        //  → 可読性 (immutableが読むための情報になる)
+        //
+        // o デメリット: メモリの効率 by まつもとさん
+        //  → でもStringくらいなら些細なことかな？ by まつもとさん
+        //  → そのデメリット、昔は気にしていたけど、今はだいぶ薄くなってきた
+        //  → immutableを実現するのに多少手間が掛かる by jflute
+        //  → mutableに手間をかけたらimmutable, なので言語の文法のフォローなどが必要
+        //  → 昨今の言語だと、immutableサポートが手厚くなってきている
+        // 
+        // immutable歴史
+        // o 昔はインフラが貧弱だった (メモリめっちゃ少ないし、言語の文法の貧弱)
+        // o いまやメモリたくさんなので、細かいことは気にしなくても良くなってきた
+        // o 昨今の言語だと、immutableサポートが手厚くなってきている
+        // o なので、immutableの流れが来ている (この10年15年イメージ)
+        //
+        // immutableのバランス
+        // o Java: 歴史的なこともあれば、コンセプトもあって、混ざってる
+        //    → 8:2くらいでimmutable頑張るけど無理しない (by jflute)
+        //    → mutableで扱うときは、安全性/可読性を向上させる別の手段をうまく使って工夫する
+        // o immutable推しの他の言語
+        //    → immutable推しの文法が用意されていてやりやすい
     }
 
     // ===================================================================================
@@ -184,6 +215,9 @@ public class Step01VariableTest extends PlainTestCase {
         int land = 415;
         helpMethodArgumentImmutableMethodcall(sea, land);
         log(sea); // your answer? => harbor
+        // #1on1: immutableの論理がわかっていれば、helpメソッドを読まなくても答えがわかる (2026/08/10)
+        // 読み飛ばし。immutableは情報。
+        // mutableな引数だったら、helpの中で変えてなくても、変えてないことを確認しないといけない。
     }
 
     private void helpMethodArgumentImmutableMethodcall(String sea, int land) {
@@ -212,12 +246,11 @@ public class Step01VariableTest extends PlainTestCase {
         // 基礎的で安全性を優先してimmutableである String に対して、
         // パフォーマンスを優先してmutableなStringBuilderという感じです。
         // どちらも「文字列」を扱う似た概念のクラスですが、コンセプトが違うことで使い方がガラリと変わります。
-        // TODO jflute 次回1on1にてimmutable/mutable (2026/07/29)
+        // done jflute 次回1on1にてimmutable/mutable (2026/07/29)
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
         ++land; //416
-        sea.append(land);
     }
 
     // -----------------------------------------------------
