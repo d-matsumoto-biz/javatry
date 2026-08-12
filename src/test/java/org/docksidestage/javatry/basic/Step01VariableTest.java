@@ -38,6 +38,17 @@ public class Step01VariableTest extends PlainTestCase {
     public void test_variable_basic() { // example, so begin from the next method
         String sea = "mystic";
         log(sea); // your answer? => mystic
+
+        // TODO matsumoto 自己紹介です（読んでなくてもDoneでおkです笑） by akinari.tsuji (2026/08/12)
+        // (髙宮さん、スギモトさんとは面識あるのですが、松本さんとちゃんとお話ししたことないので...）
+        // 改めて25卒の辻です、よろしくお願いします！
+        // 自己紹介confluにまとめてるのでもし興味あれば...（お忙しいと思うのでスルーで大丈夫です笑）
+        // https://bizreach.atlassian.net/wiki/x/KwBb-w
+
+        // TODO matsumoto 松本さんは普段どの言語を使うのでしょう？？？ by akinari.tsuji (2026/08/12)
+        // そういえば知らなかったので教えて欲しいです！
+        // （念の為ですが）publicリポジトリなので、プロダクト名などは伏せて教えてください！
+        // （去年たまーに、業務情報をjavatyrリポジトリに書いてないか不安になることがありました笑）
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -113,7 +124,7 @@ public class Step01VariableTest extends PlainTestCase {
         // immutable (不変な), mutable (可変な)
         // o immutable なクラス(インスタンス) // default
         // o immutable な変数
-        // 
+        //
         // immutableのメリット/デメリット
         // o メリット: 値が変わらないことが保証される
         //  → (学生時代に)並列処理などで値が変わっちゃうのを防げる!? by まつもとさん
@@ -126,7 +137,7 @@ public class Step01VariableTest extends PlainTestCase {
         //  → immutableを実現するのに多少手間が掛かる by jflute
         //  → mutableに手間をかけたらimmutable, なので言語の文法のフォローなどが必要
         //  → 昨今の言語だと、immutableサポートが手厚くなってきている
-        // 
+        //
         // immutable歴史
         // o 昔はインフラが貧弱だった (メモリめっちゃ少ないし、言語の文法の貧弱)
         // o いまやメモリたくさんなので、細かいことは気にしなくても良くなってきた
@@ -139,6 +150,11 @@ public class Step01VariableTest extends PlainTestCase {
         //    → mutableで扱うときは、安全性/可読性を向上させる別の手段をうまく使って工夫する
         // o immutable推しの他の言語
         //    → immutable推しの文法が用意されていてやりやすい
+
+        // TODO matsumoto ソースコードリーディングいいですね！！ by akinari.tsuji (2026/08/12)
+        // （チームによるかと思いますが）先輩・ベテランエンジニアとライブラリやOSSのコードを一緒に読む機会がとても貴重なので、
+        // ぜひ読み方を盗んでください！そしてここにコツを書いておいてください（自分が読んで参考にします笑）
+        // もし機会があれば、チームの先輩とペアプロするととても勉強になるのでぜひ！
     }
 
     // ===================================================================================
