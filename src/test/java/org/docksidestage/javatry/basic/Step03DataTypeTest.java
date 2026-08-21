@@ -40,21 +40,21 @@ public class Step03DataTypeTest extends PlainTestCase {
     public void test_datatype_basicType() {
         String sea = "mystic";
         Integer land = 416;
-        LocalDate piari = LocalDate.of(2001, 9, 4);
+        LocalDate piari = LocalDate.of(2001, 9, 4);// ここら辺まで読まないで済んだ
         LocalDateTime bonvo = LocalDateTime.of(2001, 9, 4, 12, 34, 56);
         Boolean dstore = true;
         BigDecimal amba = new BigDecimal("9.4");
 
         piari = piari.plusDays(1);
         land = piari.getYear();
-        bonvo = bonvo.plusMonths(1);
+        bonvo = bonvo.plusMonths(1); // 9 + 1
         land = bonvo.getMonthValue();
-        land--;
-        if (dstore) {
-            BigDecimal addedDecimal = amba.add(new BigDecimal(land));
+        land--; //10 -> 9
+        if (dstore) {// 常にTrue
+            BigDecimal addedDecimal = amba.add(new BigDecimal(land)); //9.4 + 9
             sea = String.valueOf(addedDecimal);
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 18.4
     }
 
     // ===================================================================================
@@ -69,20 +69,21 @@ public class Step03DataTypeTest extends PlainTestCase {
         float dstore = 1.1f;
         double amba = 2.3d;
         char miraco = 'a';
-        boolean dohotel = miraco == 'a';
-        if (dohotel && dstore >= piari) {
-            bonvo = sea;
-            land = (short) bonvo;
-            bonvo = piari;
-            sea = (byte) land;
-            if (amba == 2.3D) {
-                sea = (byte) amba;
+        boolean dohotel = miraco == 'a'; //true
+        if (dohotel && dstore >= piari) { // true && 1.1 >= 1 true
+            bonvo = sea; //127
+            land = (short) bonvo; // 127
+            bonvo = piari; // 1
+            sea = (byte) land; //127
+            if (amba == 2.3D) { //true
+                sea = (byte) amba; // 2
             }
         }
-        if ((int) dstore > piari) {
+        if ((int) dstore > piari) { // false   1(1.1 -> (int) -> 1) > 1
             sea = 0;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => // 2
+        // ちょっと漠然読みできなかった　if文読んでたら意識が抜けてしまいました
     }
 
     // ===================================================================================
@@ -92,12 +93,12 @@ public class Step03DataTypeTest extends PlainTestCase {
     public void test_datatype_object() {
         St3ImmutableStage stage = new St3ImmutableStage("hangar");
         String sea = stage.getStageName();
-        log(sea); // your answer? => 
+        log(sea); // your answer? =>  hangar
     }
 
-    private static class St3ImmutableStage {
+    private static class St3ImmutableStage { // イミュータブルなクラス？
 
-        private final String stageName;
+        private final String stageName; //一回だけ入れられる イミュータブル
 
         public St3ImmutableStage(String stageName) {
             this.stageName = stageName;
