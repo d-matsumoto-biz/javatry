@@ -212,23 +212,19 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
-        String sea = null;
+        StringBuilder sea = new StringBuilder();
+
         stageList.forEach(stage -> {
-            if (stage.startsWith("br"))
+            if (stage.startsWith("br")) {
                 return;
-            if (stage.contains("ga"))
-                log(stage);
+            }
+            if (sea.toString().contains("ga")) {
+                return; // break後の要素を処理しない
+            }
+            sea.setLength(0);
+            sea.append(stage);
         });
-        //        for (String stage : stageList) {
-        //            if (stage.startsWith("br")) {
-        //                continue;
-        //            }
-        //            sea = stage;
-        //            if (stage.contains("ga")) { // hangar が引っかかる
-        //                break;
-        //            }
-        //        }
-        //        log(sea); // hangar
+        log(sea.toString()); // hangar
         // TODO matsumoto このエクササイズ、"置き換えてみましょう" なので書き問題です by jflute (2026/08/09)
         // 修正しましたが、seaの型を変えたりしないと全く一緒の動きにはならなそうです、、
         // TODO matsumoto [へんじ] seaの型は変えてもOKで、コンソールに出てくる結果が同じになればOK by jflute (2026/08/10)
