@@ -216,6 +216,7 @@ public class Step02IfForTest extends PlainTestCase {
     // ===================================================================================
     //                                                                           Good Luck
     //                                                                           =========
+
     /**
      * Change foreach statement to List's forEach() (keep result after fix) <br>
      * (foreach文をforEach()メソッドへの置き換えてみましょう (修正前と修正後で実行結果が同じになるように))
@@ -223,11 +224,12 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
         StringBuilder sea = new StringBuilder();
-
         stageList.forEach(stage -> {
             if (stage.startsWith("br")) {
                 return;
             }
+            // TODO matsumoto パフォーマンス配慮、toString()でマイループStringインスタンス by jflute (2026/08/27)
+            // StringBuilder自身で、contains()に相当する処理ができたら世話ない。
             if (sea.toString().contains("ga")) {
                 return; // break後の要素を処理しない
             }
@@ -238,6 +240,59 @@ public class Step02IfForTest extends PlainTestCase {
         // TODO matsumoto このエクササイズ、"置き換えてみましょう" なので書き問題です by jflute (2026/08/09)
         // 修正しましたが、seaの型を変えたりしないと全く一緒の動きにはならなそうです、、
         // TODO matsumoto [へんじ] seaの型は変えてもOKで、コンソールに出てくる結果が同じになればOK by jflute (2026/08/10)
+
+        // #1on1: へんなフラグ変数とか使わずに実現しているのでスマート (2026/08/27)
+
+        // #1on1: for文とforEach()メソッドの違い (2026/08/27)
+        // $forEach()メソッドだと、拡張for文に比べて、関係性がわかりやすい。
+        //
+        // 機能的な違い:
+        // forEach()メソッドだとcontinue;break;ができない。
+        // forEach()メソッドだと外側のローカル変数の再代入ができない。
+        //
+        // $for文が慣れていたので、forEach()メソッド慣れてなかった。
+        // $stageList.forEach... なので中の処理が属してるように見える？？？
+        //
+        // forEach()メソッドは、Javaの文法のループではなく、ただのメソッド。
+        // 中でJavaの文法のループを使ってループを表現している代理人みたいなもの。
+        //
+        // ${}の中は別のクラスだから、さらに別のローカル変数を変えられるのも確かに変
+        // そう、その直感合ってます。{} は別クラス別メソッド。
+        // -> {} Lambda式って呼ぶ。step8 でじっくりやるので詳細はまた今後。
+        // ローカル変数というコンセプトもそうだし、仮にできたとしてもライフサイクルですれ違いが起きてカオス。
+        // final or 実質finalなら参照はできる。コピーするだけなのでカオスは起きない。
+        //
+        // continue;break;ができない理由。
+        // $クラスと同じ扱い、ループで回れる処理だと思ってないから
+        //
+        // forEach()メソッドの存在意義は？
+        // 先ほどおっしゃった「関係性がわかりやすい」は確かにあるかもだけど...
+        // それだけで出てくるか？
+        //
+        // o intあいfor文: Java当初から (1995年)
+        // o 拡張for文: Java10年目くらい (2005)
+        // o forEach()メソッド: Java20年目くらい (2015)
+        //
+        // $メモリとかパフォーマンスとか？
+        // 確かにミクロに見ればあるけど、そこまで大きなものではないかも。
+        // $可読性？
+        // yes, でも「関係性がわかりやすい」だけの話じゃない。
+        // forEach()は制限だらけのループと言える。
+        // immutable/mutableで比較すると...
+        // 外側のローカル変数を変えられないことの安全性
+        // 変えられないというルールが決まっているからこその可読性
+        // mutable: 拡張for文
+        // immutable: forEach()メソッド
+        // forEach()メソッドは、ストレートなループを回すのに向いている。
+        // しかも、webサービスの現場ではストレートなループがほとんど。
+        //
+        // よもやま話:
+        // 制限はデメリットとは限らない。制限から得られるものがある。
+        // ぼくらはいかにうまく制限デザインをするか？
+        // 
+        // かといって適材適所すぎるのもつらい。
+        // 使い分けの判断コストというがデメリットになる。
+        // そこを配慮して統一性を優先する考え方もある。
     }
 
     /**
