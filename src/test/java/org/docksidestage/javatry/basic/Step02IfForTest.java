@@ -230,16 +230,16 @@ public class Step02IfForTest extends PlainTestCase {
             }
             // TODO matsumoto パフォーマンス配慮、toString()でマイループStringインスタンス by jflute (2026/08/27)
             // StringBuilder自身で、contains()に相当する処理ができたら世話ない。
-            if (sea.toString().contains("ga")) {
+            if (sea.indexOf("ga") >= 0) { //ga が存在しないときは -1になる
                 return; // break後の要素を処理しない
             }
             sea.setLength(0);
             sea.append(stage);
         });
         log(sea.toString()); // hangar
-        // TODO matsumoto このエクササイズ、"置き換えてみましょう" なので書き問題です by jflute (2026/08/09)
+        // このエクササイズ、"置き換えてみましょう" なので書き問題です by jflute (2026/08/09)
         // 修正しましたが、seaの型を変えたりしないと全く一緒の動きにはならなそうです、、
-        // TODO matsumoto [へんじ] seaの型は変えてもOKで、コンソールに出てくる結果が同じになればOK by jflute (2026/08/10)
+        // [へんじ] seaの型は変えてもOKで、コンソールに出てくる結果が同じになればOK by jflute (2026/08/10)
 
         // #1on1: へんなフラグ変数とか使わずに実現しているのでスマート (2026/08/27)
 
