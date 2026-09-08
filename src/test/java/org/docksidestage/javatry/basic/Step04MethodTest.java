@@ -35,15 +35,15 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_call_basic() {
         String sea = supplySomething();
-        log(sea); // your answer? =>
+        log(sea); // your answer? => over
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_method_call_many() {
-        String sea = functionSomething("mystic");
-        consumeSomething(supplySomething());
-        runnableSomething();
-        log(sea); // your answer? => 
+        String sea = functionSomething("mystic"); // log -> in function: mysmys
+        consumeSomething(supplySomething()/*over*/);//log-> in supply: over / in consume: mystic
+        runnableSomething();//log->in runnable: outofshadow
+        log(sea); // your answer? => mysmys
     }
 
     private String functionSomething(String name) {
@@ -72,18 +72,18 @@ public class Step04MethodTest extends PlainTestCase {
         St4MutableStage mutable = new St4MutableStage();
         int sea = 904;
         boolean land = false;
-        helloMutable(sea - 4, land, mutable);
-        if (!land) {
-            sea = sea + mutable.getStageName().length();
+        helloMutable(sea - 4/* 900 */, land, mutable);
+        if (!land) { // T
+            sea = sea + mutable.getStageName().length(); //904 + 6
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 910
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
-        sea++;
+        sea++;//901
         land = true;
         piari.setStageName("mystic");
-        return sea;
+        return sea; //901
     }
 
     private static class St4MutableStage {
@@ -102,7 +102,7 @@ public class Step04MethodTest extends PlainTestCase {
     // ===================================================================================
     //                                                                   Instance Variable
     //                                                                   =================
-    private int inParkCount;
+    private int inParkCount; // 暗黙で0?
     private boolean hasAnnualPassport;
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -113,9 +113,9 @@ public class Step04MethodTest extends PlainTestCase {
         for (int i = 0; i < 100; i++) {
             goToPark();
         }
-        ++sea;
-        sea = inParkCount;
-        log(sea); // your answer? => 
+        ++sea;//101
+        sea = inParkCount;//100
+        log(sea); // your answer? => 100
     }
 
     private void offAnnualPassport(boolean hasAnnualPassport) {
@@ -151,13 +151,29 @@ public class Step04MethodTest extends PlainTestCase {
      * </pre>
      */
     public void test_method_making() {
-        // use after making these methods
-        //String replaced = replaceCwithB(replaceAwithB("ABC"));
-        //String sea = quote(replaced, "'");
-        //if (isAvailableLogging()) {
-        //    showSea(sea);
-        //}
+        String replaced = replaceCwithB(replaceAwithB("ABC")/*BBC*/);//BBB
+        String sea = quote(replaced, "'");//'BBB'
+        if (isAvailableLogging()) {// T
+            showSea(sea);// showSea: 'BBB'
+        }
     }
 
     // write methods here
+    private final Boolean availableLogging = true;
+
+    private String replaceAwithB(String str){
+        return str.replace("A", "B");
+    }
+    private String replaceCwithB(String str){
+        return str.replace("C", "B");
+    }
+    private String quote(String str, String quote){
+        return (quote + str + quote);
+    }
+    private Boolean isAvailableLogging(){
+        return availableLogging;
+    }
+    private void showSea(String sea){
+        log("showSea: {}", sea);
+    }
 }
