@@ -40,6 +40,20 @@ public class Step03DataTypeTest extends PlainTestCase {
     public void test_datatype_basicType() {
         String sea = "mystic";
         Integer land = 416;
+        // #1on1: Date, DateTime, 日付、日時のお話 (2026/09/09)
+        // 日付(Date): 年月日
+        // 日時(DateTime): 年月日+時分秒(+ミリ秒)
+        //
+        // 歴史的経緯とかあって、一部こうじゃないケースもあるので注意。
+        // Dateって言ってるのに、時分秒があるケースとか。
+        // java.util.Date: 年月日+時分秒+ミリ秒
+        // OracleDB: DATE型が年月日+時分秒
+        // dateコメント: 時分秒も出る
+        //
+        // 若干注意。
+        //
+        // 日付系、Date系という言葉。
+        //
         LocalDate piari = LocalDate.of(2001, 9, 4);// ここら辺まで読まないで済んだ
         LocalDateTime bonvo = LocalDateTime.of(2001, 9, 4, 12, 34, 56);
         Boolean dstore = true;
@@ -84,7 +98,9 @@ public class Step03DataTypeTest extends PlainTestCase {
         }
         log(sea); // your answer? => // 2
         // ちょっと漠然読みできなかった　if文読んでたら意識が抜けてしまいました
+        // #1on1: まあGood, こういう思い出の繰り返しで習慣化していくものなので (2026/09/09)
     }
+    // #1on1: 漠然読みのエクササイズがもっとあったらいいかも (2026/09/09)
 
     // ===================================================================================
     //                                                                              Object
@@ -96,6 +112,8 @@ public class Step03DataTypeTest extends PlainTestCase {
         log(sea); // your answer? =>  hangar
     }
 
+    // #1on1: immutableなクラスを自前で作るとしたらこうなる (2026/09/09)
+    // finalは厳密には必須ではないが、あった方が安全で可読性も良い。
     private static class St3ImmutableStage { // イミュータブルなクラス？
 
         private final String stageName; //一回だけ入れられる イミュータブル

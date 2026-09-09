@@ -161,19 +161,47 @@ public class Step04MethodTest extends PlainTestCase {
     // write methods here
     private final Boolean availableLogging = true;
 
-    private String replaceAwithB(String str){
+    // #1on1: いいね、メソッドの定義順が、呼び出し順序と一致してて直感的で理解しやすい把握しやすい (2026/09/09)
+    // $最初はちょっとたまたま、でも書いた後で並んでることは確認した。
+    //
+    // メソッドの定義順、文法的には縛りはない。(挙動も変わらない)
+    // でも人間のための可読性で何かしらのルールで並べたい。
+    // その方法の一つ。呼び出し順序。
+    // (あとは...アルファベット順...あんまり嬉しくないかもだけど、バラバラよりはマシ)
+    //
+    // jfluteは、呼び出し順序を意識したメソッド定義順はよく使う。
+    // フラットなときは単純に呼び出し順序だけど、階層を作ることもある。
+    // でもその一つの階層の中ではまた呼び出し順序を意識したり。
+    // LastaFlute の ActionRequestProcessor を例に。
+    //
+    // コードの体裁デザイン、ぐちゃぐちゃ動くんだけど、人間のために整えておきたい。
+    // 命名に関してはある程度自然と考える人も多いけど、メソッド定義位置とかは少ない印象。
+    //
+    // 既存コードって、自分のものじゃない感が強い。
+    // 一人一人がちょっとずつゴミを捨てていって最終的にクラスがキメラになる。
+    // 最初からダメなパターンもあるけど、最初は良かったのにってパターンも多い。
+    // 既存コードのコード体裁デザインのコンセプトを理解して、修正して欲しい。
+    //
+    // $勇気を持った方が良い。
+    // クラスの責任は、別に最初に作った人が持ってるわけじゃない。
+    private String replaceAwithB(String str) {
         return str.replace("A", "B");
     }
-    private String replaceCwithB(String str){
+
+    private String replaceCwithB(String str) {
         return str.replace("C", "B");
     }
-    private String quote(String str, String quote){
+
+    // #1on1: いいね、第二引数の引数名が業務的な意味を表現しててGood (2026/09/09)
+    private String quote(String str, String quote) {
         return (quote + str + quote);
     }
-    private Boolean isAvailableLogging(){
+
+    private Boolean isAvailableLogging() {
         return availableLogging;
     }
-    private void showSea(String sea){
+
+    private void showSea(String sea) {
         log("showSea: {}", sea);
     }
 }
