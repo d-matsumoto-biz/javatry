@@ -24,23 +24,63 @@ public class Ticket {
     //                                                                           Attribute
     //                                                                           =========
     private final int displayPrice; // written on ticket, park guest can watch this
-    private boolean alreadyIn; // true means this ticket is unavailable
+    private int canUseCount;
+    private static final int TWO_DAY_CAN_USE = 2;
+    private static final int ONE_DAY_CAN_USE = 1;
+    private static final int FOUR_DAY_CAN_USE = 4;
+    private static final int NIGHT_ONLY_TWO_DAY_CAN_USE = 2;
+    private final TicketType ticketType;
+
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public Ticket(int displayPrice) {
+    public Ticket(
+            int displayPrice,
+            TicketType ticketType
+    ) {
         this.displayPrice = displayPrice;
+        this.ticketType = ticketType;
+        switch (ticketType) {
+            case ONE_DAY:
+                this.canUseCount = ONE_DAY_CAN_USE;
+                break;
+            case TWO_DAY:
+                this.canUseCount = TWO_DAY_CAN_USE;
+                break;
+            case FOUR_DAY:
+                this.canUseCount = FOUR_DAY_CAN_USE;
+                break;
+            case NIGHT_ONLY_TWO_DAY:
+                this.canUseCount = NIGHT_ONLY_TWO_DAY_CAN_USE;
+                break;
+        }
     }
 
     // ===================================================================================
     //                                                                             In Park
     //                                                                             =======
     public void doInPark() {
-        if (alreadyIn) {
+        if (canUseCount <= 0) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
-        alreadyIn = true;
+        if (this.ticketType == TicketType.NIGHT_ONLY_TWO_DAY)
+        {
+            throw new IllegalStateException("Time of day is required for this ticket");
+        }
+        canUseCount--;
+    }
+
+    //昼夜判定用
+    public void doInPark(TimeOfDay time) {
+        if (canUseCount <= 0) {
+            throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
+        }
+        if(this.ticketType == TicketType.NIGHT_ONLY_TWO_DAY && time != TimeOfDay.NIGHT)
+        {
+            throw new IllegalStateException("This ticket is only usable for night");
+        }
+        canUseCount--;
     }
 
     // ===================================================================================
@@ -51,6 +91,9 @@ public class Ticket {
     }
 
     public boolean isAlreadyIn() {
-        return alreadyIn;
+        return canUseCount == 0;
+    }
+    public TicketType getTicketType() {
+        return ticketType;
     }
 }

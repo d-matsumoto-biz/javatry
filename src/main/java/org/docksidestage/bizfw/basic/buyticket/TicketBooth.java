@@ -14,7 +14,6 @@
  * governing permissions and limitations under the License.
  */
 package org.docksidestage.bizfw.basic.buyticket;
-
 /**
  * @author jflute
  */
@@ -25,6 +24,10 @@ public class TicketBooth {
     //                                                                          ==========
     private static final int MAX_QUANTITY = 10;
     private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
+    private static final int TWO_DAY_PRICE = 13200;
+    private static final int FOUR_DAY_PRICE = 22400;
+    private static final int NIGHT_ONLY_TWO_DAY_PRICE = 7400;
+
 
     // ===================================================================================
     //                                                                           Attribute
@@ -43,6 +46,26 @@ public class TicketBooth {
     //                                                                          ==========
     // you can rewrite comments for your own language by jflute
     // e.g. Japanese
+
+    // チケット購入に伴う処理
+    private TicketBuyResult ticketTransaction(TicketPurchaseApplication application){
+        if (quantity <= 0) {
+            throw new TicketSoldOutException("Sold out");
+        }
+        int handedMoney = application.getHandedMoney();
+        int price = application.getPrice();
+        TicketType ticketType = application.getTicketType();
+
+        if (salesProceeds != null) { // second or more purchase
+            salesProceeds = salesProceeds + price;
+        } else { // first purchase
+            salesProceeds = price;
+        }
+        --quantity;
+        TicketBuyResult result = new TicketBuyResult(price, ticketType);
+        result.setChange(handedMoney - application.getPrice());
+        return result ;
+    }
     // /**
     // * 1Dayパスポートを買う、パークゲスト用のメソッド。
     // * @param handedMoney パークゲストから手渡しされたお金(金額) (NotNull, NotMinus)
@@ -55,19 +78,40 @@ public class TicketBooth {
      * @throws TicketSoldOutException When ticket in booth is sold out.
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
-    public void buyOneDayPassport(Integer handedMoney) {
-        if (quantity <= 0) {
-            throw new TicketSoldOutException("Sold out");
-        }
-        --quantity;
+    public TicketBuyResult buyOneDayPassport(Integer handedMoney) {
         if (handedMoney < ONE_DAY_PRICE) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        if (salesProceeds != null) { // second or more purchase
-            salesProceeds = salesProceeds + handedMoney;
-        } else { // first purchase
-            salesProceeds = handedMoney;
+        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, ONE_DAY_PRICE, TicketType.ONE_DAY);
+        TicketBuyResult result = ticketTransaction(application);
+        return result;
+    }
+
+    public TicketBuyResult buyTwoDayPassport(Integer handedMoney){
+        if (handedMoney < TWO_DAY_PRICE) {
+            throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
+        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TWO_DAY_PRICE, TicketType.TWO_DAY);
+        TicketBuyResult result = ticketTransaction(application);
+        return result;
+    }
+
+    public TicketBuyResult buyFourDayPassport(Integer handedMoney){
+        if (handedMoney < FOUR_DAY_PRICE) {
+            throw new TicketShortMoneyException("Short money: " + handedMoney);
+        }
+        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, FOUR_DAY_PRICE, TicketType.FOUR_DAY);
+        TicketBuyResult result = ticketTransaction(application);
+        return result;
+    }
+
+    public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney){
+        if (handedMoney < NIGHT_ONLY_TWO_DAY_PRICE) {
+            throw new TicketShortMoneyException("Short money: " + handedMoney);
+        }
+        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, NIGHT_ONLY_TWO_DAY_PRICE, TicketType.NIGHT_ONLY_TWO_DAY);
+        TicketBuyResult result = ticketTransaction(application);
+        return result;
     }
 
     public static class TicketSoldOutException extends RuntimeException {
