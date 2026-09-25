@@ -184,7 +184,7 @@ public class Step02IfForTest extends PlainTestCase {
         String sea = sb.toString();
         log(sea); // your answer? => dockside
 
-        // TODO jflute 次回1on1にて、for文とforEach()メソッドの違いについて (2026/08/09)
+        // done jflute 次回1on1にて、for文とforEach()メソッドの違いについて (2026/08/09)
         // (書き換えエクササイズをやってもらってからフォローすることにする)
     }
 
@@ -228,7 +228,7 @@ public class Step02IfForTest extends PlainTestCase {
             if (stage.startsWith("br")) {
                 return;
             }
-            // TODO matsumoto パフォーマンス配慮、toString()でマイループStringインスタンス by jflute (2026/08/27)
+            // done matsumoto パフォーマンス配慮、toString()でマイループStringインスタンス by jflute (2026/08/27)
             // StringBuilder自身で、contains()に相当する処理ができたら世話ない。
             if (sea.indexOf("ga") >= 0) { //ga が存在しないときは -1になる
                 return; // break後の要素を処理しない
