@@ -39,17 +39,17 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "mystic";
         log(sea); // your answer? => mystic
 
-        // TODO matsumoto 自己紹介です（読んでなくてもDoneでおkです笑） by akinari.tsuji (2026/08/12)
+        // matsumoto 自己紹介です（読んでなくてもDoneでおkです笑） by akinari.tsuji (2026/08/12)
         // (髙宮さん、スギモトさんとは面識あるのですが、松本さんとちゃんとお話ししたことないので...）←部屋の隅の隅なので同期含め部署外の人との交流は少ないです(泣)
         // 改めて25卒の辻です、よろしくお願いします！                          <- お忙しいところありがとうございます...!よろしくお願いいたします！！
         // 自己紹介confluにまとめてるのでもし興味あれば...（お忙しいと思うのでスルーで大丈夫です笑）
         // https://bizreach.atlassian.net/wiki/x/KwBb-w                 <- 読ませていただきました...!! 自分のもぜひ..! https://bizreach.atlassian.net/wiki/x/KQDPRAE
 
-        // TODO matsumoto 松本さんは普段どの言語を使うのでしょう？？？ by akinari.tsuji (2026/08/12)
+        // matsumoto 松本さんは普段どの言語を使うのでしょう？？？ by akinari.tsuji (2026/08/12)
         // そういえば知らなかったので教えて欲しいです！
         // （念の為ですが）publicリポジトリなので、プロダクト名などは伏せて教えてください！
         // （去年たまーに、業務情報をjavatyrリポジトリに書いてないか不安になることがありました笑）　← ヒェッ　肝が冷えますね
-        // TODO 普段はAngularとScalaがメインです！
+        // 普段はAngularとScalaがメインです！
         // 大学生の頃の個人開発ではもっぱらPython, WebアプリならDjangoでまとめて作るか、LLMで開発ができるようになってきてから
         // FastAPIとNext.jsで分けて作っていました！
 
@@ -156,7 +156,7 @@ public class Step01VariableTest extends PlainTestCase {
         // o immutable推しの他の言語
         //    → immutable推しの文法が用意されていてやりやすい
 
-        // TODO matsumoto ソースコードリーディングいいですね！！ by akinari.tsuji (2026/08/12)
+        //  matsumoto ソースコードリーディングいいですね！！ by akinari.tsuji (2026/08/12)
         // （チームによるかと思いますが）先輩・ベテランエンジニアとライブラリやOSSのコードを一緒に読む機会がとても貴重なので、
         // ぜひ読み方を盗んでください！そしてここにコツを書いておいてください（自分が読んで参考にします笑）
         // もし機会があれば、チームの先輩とペアプロするととても勉強になるのでぜひ！
