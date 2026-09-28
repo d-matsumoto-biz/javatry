@@ -1,16 +1,42 @@
 package org.docksidestage.bizfw.basic.buyticket.constants;
 
-import java.time.LocalDateTime;
-
 public enum TicketInfo {
-    ONE_DAY(7400, 1, 0), //1日券
-    TWO_DAY(13200, 2, 0), //2日券
-    FOUR_DAY(22400, 4, 0), //4日券
-    NIGHT_ONLY_TWO_DAY(7400, 2, 16); //ナイトツーデイ券
+    //1日券
+    ONE_DAY(
+            7400,
+            1,
+            0,
+            10
+    ),
+
+    //2日券
+    TWO_DAY(
+            13200,
+            2,
+            0,
+            10
+    ),
+
+    //4日券
+    FOUR_DAY(
+            22400,
+            4,
+            0,
+            10
+    ),
+
+    //ナイトツーデイ券
+    NIGHT_ONLY_TWO_DAY(
+            7400,
+            2,
+            16,
+            2
+    );
 
     private final int price;
     private final int canUseCount;
     private final int entryStartableTime; //簡単のためにLocalDate等は用いない
+    private final int maxQuantity;
 
     /**
      * チケット情報
@@ -21,11 +47,13 @@ public enum TicketInfo {
     TicketInfo(
             int price,
             int canUseCount,
-            int entryStartableTime
+            int entryStartableTime,
+            int maxQuantity
     ){
         this.price = price;
         this.canUseCount = canUseCount;
         this.entryStartableTime = entryStartableTime;
+        this.maxQuantity = maxQuantity;
     }
 
     /**
@@ -50,5 +78,13 @@ public enum TicketInfo {
      */
     public int getEntryStartableTime(){
         return entryStartableTime;
+    }
+
+    /**
+     * 最大購入可能枚数を取得する。
+     * @return 最大購入可能枚数
+     */
+    public int getMaxQuantity() {
+        return maxQuantity;
     }
 }

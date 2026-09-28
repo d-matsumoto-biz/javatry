@@ -25,13 +25,11 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
-    private static final int MAX_QUANTITY = 10;
 
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    private int quantity = MAX_QUANTITY;
     private Integer salesProceeds; // null allowed: until first purchase
 
     // ===================================================================================
@@ -48,18 +46,15 @@ public class TicketBooth {
 
     // チケット購入に伴う処理
     private TicketBuyResult ticketTransaction(Integer handedMoney, TicketInfo ticketInfo){
-        if (quantity <= 0) {
-            throw new TicketSoldOutException("Sold out");
-        }
         int price = ticketInfo.getPrice();
-
+        TicketQuantity.isAvailabilityForSale(ticketInfo); // 購入前チェック
+        TicketQuantity.checkAndDecreaseQuantity(ticketInfo);
+        TicketBuyResult result = new TicketBuyResult(ticketInfo);
         if (salesProceeds != null) { // second or more purchase
             salesProceeds = salesProceeds + price;
         } else { // first purchase
             salesProceeds = price;
         }
-        --quantity;
-        TicketBuyResult result = new TicketBuyResult(ticketInfo);
         result.setChange(handedMoney - price);
         return result ;
     }
@@ -143,8 +138,8 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
-    public int getQuantity() {
-        return quantity;
+    public int getQuantity(TicketInfo ticketInfo) {
+        return TicketQuantity.getQuantity(ticketInfo);
     }
 
     public Integer getSalesProceeds() {

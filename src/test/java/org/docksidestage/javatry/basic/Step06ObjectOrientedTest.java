@@ -176,13 +176,13 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     private void saveBuyingHistory(TicketBooth booth, Ticket ticket) {
         if (ticket.isAlreadyIn()) {
             // only logging here (normally e.g. DB insert)
-            doShowTicketBooth(booth);
+            doShowTicketBooth(booth, ticket);
             doShowYourTicket(ticket);
         }
     }
 
-    private void doShowTicketBooth(TicketBooth booth) {
-        log("Ticket Booth: quantity={}, salesProceeds={}", booth.getQuantity(), booth.getSalesProceeds());
+    private void doShowTicketBooth(TicketBooth booth, Ticket ticket) {
+        log("Ticket Booth: quantity={}, salesProceeds={}", booth.getQuantity(ticket.getTicketInfo()), booth.getSalesProceeds());
     }
 
     private void doShowYourTicket(Ticket ticket) {
