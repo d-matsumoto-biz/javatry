@@ -15,8 +15,7 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-import org.docksidestage.bizfw.basic.buyticket.constants.TicketPrice;
-import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
 
 /**
  * @author jflute
@@ -48,13 +47,11 @@ public class TicketBooth {
     // e.g. Japanese
 
     // チケット購入に伴う処理
-    private TicketBuyResult ticketTransaction(TicketPurchaseApplication application){
+    private TicketBuyResult ticketTransaction(Integer handedMoney, TicketInfo ticketInfo){
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
-        int handedMoney = application.getHandedMoney();
-        int price = application.getPrice();
-        TicketType ticketType = application.getTicketType();
+        int price = ticketInfo.getPrice();
 
         if (salesProceeds != null) { // second or more purchase
             salesProceeds = salesProceeds + price;
@@ -62,8 +59,8 @@ public class TicketBooth {
             salesProceeds = price;
         }
         --quantity;
-        TicketBuyResult result = new TicketBuyResult(price, ticketType);
-        result.setChange(handedMoney - application.getPrice());
+        TicketBuyResult result = new TicketBuyResult(ticketInfo);
+        result.setChange(handedMoney - price);
         return result ;
     }
     // /**
@@ -79,38 +76,49 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public TicketBuyResult buyOneDayPassport(Integer handedMoney) {
-        if (handedMoney < TicketPrice.ONE_DAY_PRICE.getPrice()) {
+        if (handedMoney < TicketInfo.ONE_DAY.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TicketPrice.ONE_DAY_PRICE.getPrice(), TicketType.ONE_DAY);
-        TicketBuyResult result = ticketTransaction(application);
+        TicketBuyResult result = ticketTransaction(handedMoney, TicketInfo.ONE_DAY);
         return result;
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney){
-        if (handedMoney < TicketPrice.TWO_DAY_PRICE.getPrice()) {
+        if (handedMoney < TicketInfo.TWO_DAY.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TicketPrice.TWO_DAY_PRICE.getPrice(), TicketType.TWO_DAY);
-        TicketBuyResult result = ticketTransaction(application);
+        TicketBuyResult result = ticketTransaction(handedMoney, TicketInfo.TWO_DAY);
         return result;
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney){
-        if (handedMoney < TicketPrice.FOUR_DAY_PRICE.getPrice()) {
+        if (handedMoney < TicketInfo.FOUR_DAY.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TicketPrice.FOUR_DAY_PRICE.getPrice(), TicketType.FOUR_DAY);
-        TicketBuyResult result = ticketTransaction(application);
+        TicketBuyResult result = ticketTransaction(handedMoney, TicketInfo.FOUR_DAY);
         return result;
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney){
-        if (handedMoney < TicketPrice.NIGHT_ONLY_TWO_DAY_PRICE.getPrice()) {
+        if (handedMoney < TicketInfo.NIGHT_ONLY_TWO_DAY.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TicketPrice.NIGHT_ONLY_TWO_DAY_PRICE.getPrice(), TicketType.NIGHT_ONLY_TWO_DAY);
-        TicketBuyResult result = ticketTransaction(application);
+        TicketBuyResult result = ticketTransaction(handedMoney, TicketInfo.NIGHT_ONLY_TWO_DAY);
+        return result;
+    }
+
+    /**
+     * チケットを購入する
+     * お金が足りない場合や売り切れの場合はエラーを返す。
+     * @param handedMoney 払ったお金
+     * @param ticketInfo 購入するチケットの情報
+     * @return 購入結果
+     */
+    public TicketBuyResult buyPassport(Integer handedMoney, TicketInfo ticketInfo){
+        if (handedMoney < ticketInfo.getPrice()) {
+            throw new TicketShortMoneyException("Short money: " + handedMoney);
+        }
+        TicketBuyResult result = ticketTransaction(handedMoney, ticketInfo);
         return result;
     }
 

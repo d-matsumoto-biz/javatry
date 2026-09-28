@@ -15,9 +15,7 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-import org.docksidestage.bizfw.basic.buyticket.constants.TicketCanUseCount;
-import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
-import org.docksidestage.bizfw.basic.buyticket.constants.TimeOfDay;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
 
 /**
  * @author jflute
@@ -29,56 +27,61 @@ public class Ticket {
     //                                                                           =========
     private final int displayPrice; // written on ticket, park guest can watch this
     private int canUseCount;
-    private final TicketType ticketType;
+    private final TicketInfo ticketInfo;
 
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
+    /**
+     * チケットの初期化
+     * @param ticketInfo チケット情報
+     */
     public Ticket(
-            int displayPrice,
-            TicketType ticketType
+            TicketInfo ticketInfo
     ) {
-        this.displayPrice = displayPrice;
-        this.ticketType = ticketType;
-        switch (ticketType) {
-            case ONE_DAY:
-                this.canUseCount = TicketCanUseCount.ONE_DAY_CAN_USE.getCount();
-                break;
-            case TWO_DAY:
-                this.canUseCount = TicketCanUseCount.TWO_DAY_CAN_USE.getCount();
-                break;
-            case FOUR_DAY:
-                this.canUseCount = TicketCanUseCount.FOUR_DAY_CAN_USE.getCount();
-                break;
-            case NIGHT_ONLY_TWO_DAY:
-                this.canUseCount = TicketCanUseCount.NIGHT_ONLY_TWO_DAY_CAN_USE.getCount();
-                break;
-        }
+        this.displayPrice = ticketInfo.getPrice();
+        this.ticketInfo = ticketInfo;
+        this.canUseCount = ticketInfo.getCanUseCount();
     }
 
     // ===================================================================================
     //                                                                             In Park
     //                                                                             =======
+    /**
+     * チケットを使用する ( 利用可能な時間を省略して呼び出し )
+     * 利用可能な回数が残っていない、
+     * もしくは入園時間の指定がないチケットで呼び出された場合は
+     * エラーを返します
+     */
     public void doInPark() {
         if (canUseCount <= 0) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
-        if (this.ticketType == TicketType.NIGHT_ONLY_TWO_DAY)
+        if (this.ticketInfo.getEntryStartableTime() != 0)
         {
             throw new IllegalStateException("Time of day is required for this ticket");
         }
         canUseCount--;
     }
 
-    //昼夜判定用
-    public void doInPark(TimeOfDay time) {
+    /**
+     * チケットを使用する
+     * @param time 入園時間
+     * 利用可能な時間が制限されているチケットに対応した関数
+     * 利用可能な回数が残っていない
+     * もしくは、利用可能な時間以前での利用の場合はエラーを返します。
+     * (この関数は利用可能な時間が制限されていないチケットでも呼び出し可能)
+     */
+    public void doInPark(int time) {
         if (canUseCount <= 0) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
-        if(this.ticketType == TicketType.NIGHT_ONLY_TWO_DAY && time != TimeOfDay.NIGHT)
-        {
-            throw new IllegalStateException("This ticket is only usable for night");
+        if (time < 0 || time > 23) {
+            throw new IllegalStateException("The time must be between 0 and 23.");
+        }
+        if (this.ticketInfo.getEntryStartableTime() > time) {
+            throw new IllegalStateException("This ticket cannot be used before " + this.ticketInfo.getEntryStartableTime() + " o'clock.");
         }
         canUseCount--;
     }
@@ -86,14 +89,26 @@ public class Ticket {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
+    /**
+     * 表示価格を取得する
+     * @return 表示価格
+     */
     public int getDisplayPrice() {
         return displayPrice;
     }
 
+    /**
+     * すでに入園しているかどうかを取得する
+     * @return すでに入園しているかどうか
+     */
     public boolean isAlreadyIn() {
         return canUseCount == 0;
     }
-    public TicketType getTicketType() {
-        return ticketType;
+    /**
+     * チケットの詳細情報を取得する
+     * @return チケットの詳細情報
+     */
+    public TicketInfo getTicketInfo() {
+        return ticketInfo;
     }
 }

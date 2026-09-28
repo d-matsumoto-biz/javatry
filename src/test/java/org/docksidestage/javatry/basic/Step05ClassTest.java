@@ -17,7 +17,7 @@ package org.docksidestage.javatry.basic;
 
 import org.docksidestage.bizfw.basic.buyticket.*;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyException;
-import org.docksidestage.bizfw.basic.buyticket.constants.TimeOfDay;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -191,7 +191,7 @@ public class Step05ClassTest extends PlainTestCase {
 
     // uncomment when you implement this exercise
     private void showTicketIfNeeds(Ticket ticket) {
-        switch (ticket.getTicketType()) {
+        switch (ticket.getTicketInfo()) {
         case TWO_DAY:
             log("two-day passport");
             break;
@@ -227,14 +227,14 @@ public class Step05ClassTest extends PlainTestCase {
     public void test_class_moreFix_wonder_night() {
         TicketBooth booth = new TicketBooth();
         TicketBuyResult result = booth.buyNightOnlyTwoDayPassport(10000);
-        log(result.getTicket().getTicketType());
+        log(result.getTicket().getTicketInfo());
         log(result.getTicket().getDisplayPrice());
         log(result.getChange());
 
-        result.getTicket().doInPark(TimeOfDay.NIGHT);// 入れる
-        //result.getTicket().doInPark(TimeOfDay.DAY);// 入れない
+        result.getTicket().doInPark(18);// 入れる
+        //result.getTicket().doInPark(11);// 入れない
         //result.getTicket().doInPark(); //error
-        result.getTicket().doInPark(TimeOfDay.NIGHT);// 入れる
+        result.getTicket().doInPark(22);// 入れる
     }
 
     // ===================================================================================
@@ -244,8 +244,25 @@ public class Step05ClassTest extends PlainTestCase {
      * Refactor the code to the best readable code you can think of. <br>
      * (自分の中で思う最高に可読性の高いコードにリファクタリングしてみましょう)
      */
+    /**
+     * - 複数存在したEnumを一つにまとめた
+     * - 分散したドメイン知識をなるべくまとめた
+     * - チケット購入関数を一つで複数種類のチケットを購入できるようにした
+     * など
+     */
     public void test_class_moreFix_yourRefactoring() {
-        // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        TicketBuyResult result = booth.buyPassport(
+                12000,
+                TicketInfo.ONE_DAY
+        );
+
+        log("チケット価格: " + result.getTicket().getTicketInfo().getPrice());
+        log("お釣り: " + result.getChange());
+
+        log(result.getTicket().isAlreadyIn());
+        result.getTicket().doInPark();
+        log(result.getTicket().isAlreadyIn());
     }
 
     /**
@@ -256,7 +273,20 @@ public class Step05ClassTest extends PlainTestCase {
      * (本気で → Ticketクラスが(例えば)オープンソースになって何百人の人から利用される想定のつもりで。)
      */
     public void test_class_moreFix_yourSuperJavaDoc() {
-        // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        TicketBuyResult result = booth.buyPassport(
+                30000,
+                TicketInfo.NIGHT_ONLY_TWO_DAY
+        );
+
+        log("チケット価格: " + result.getTicket().getTicketInfo().getPrice());
+        log("お釣り: " + result.getChange());
+
+        log(result.getTicket().isAlreadyIn());
+        result.getTicket().doInPark(18);
+        log(result.getTicket().isAlreadyIn());
+        result.getTicket().doInPark(20);//13時だとエラーになる
+        log(result.getTicket().isAlreadyIn());
     }
 
     // ===================================================================================
