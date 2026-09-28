@@ -1,5 +1,7 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
+
 public class TicketPurchaseApplication {
     private final int handedMoney;
     private final int price;

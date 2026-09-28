@@ -14,6 +14,10 @@
  * governing permissions and limitations under the License.
  */
 package org.docksidestage.bizfw.basic.buyticket;
+
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketPrice;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
+
 /**
  * @author jflute
  */
@@ -23,10 +27,6 @@ public class TicketBooth {
     //                                                                          Definition
     //                                                                          ==========
     private static final int MAX_QUANTITY = 10;
-    private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
-    private static final int TWO_DAY_PRICE = 13200;
-    private static final int FOUR_DAY_PRICE = 22400;
-    private static final int NIGHT_ONLY_TWO_DAY_PRICE = 7400;
 
 
     // ===================================================================================
@@ -79,37 +79,37 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public TicketBuyResult buyOneDayPassport(Integer handedMoney) {
-        if (handedMoney < ONE_DAY_PRICE) {
+        if (handedMoney < TicketPrice.ONE_DAY_PRICE.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, ONE_DAY_PRICE, TicketType.ONE_DAY);
+        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TicketPrice.ONE_DAY_PRICE.getPrice(), TicketType.ONE_DAY);
         TicketBuyResult result = ticketTransaction(application);
         return result;
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney){
-        if (handedMoney < TWO_DAY_PRICE) {
+        if (handedMoney < TicketPrice.TWO_DAY_PRICE.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TWO_DAY_PRICE, TicketType.TWO_DAY);
+        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TicketPrice.TWO_DAY_PRICE.getPrice(), TicketType.TWO_DAY);
         TicketBuyResult result = ticketTransaction(application);
         return result;
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney){
-        if (handedMoney < FOUR_DAY_PRICE) {
+        if (handedMoney < TicketPrice.FOUR_DAY_PRICE.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, FOUR_DAY_PRICE, TicketType.FOUR_DAY);
+        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TicketPrice.FOUR_DAY_PRICE.getPrice(), TicketType.FOUR_DAY);
         TicketBuyResult result = ticketTransaction(application);
         return result;
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney){
-        if (handedMoney < NIGHT_ONLY_TWO_DAY_PRICE) {
+        if (handedMoney < TicketPrice.NIGHT_ONLY_TWO_DAY_PRICE.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
-        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, NIGHT_ONLY_TWO_DAY_PRICE, TicketType.NIGHT_ONLY_TWO_DAY);
+        TicketPurchaseApplication application = new TicketPurchaseApplication(handedMoney, TicketPrice.NIGHT_ONLY_TWO_DAY_PRICE.getPrice(), TicketType.NIGHT_ONLY_TWO_DAY);
         TicketBuyResult result = ticketTransaction(application);
         return result;
     }

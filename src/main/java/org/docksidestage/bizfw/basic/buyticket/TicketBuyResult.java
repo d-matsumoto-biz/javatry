@@ -1,5 +1,7 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
+
 public class TicketBuyResult {
     private final Ticket ticket;
     private int change;

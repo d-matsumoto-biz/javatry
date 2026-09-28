@@ -15,6 +15,10 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketCanUseCount;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
+import org.docksidestage.bizfw.basic.buyticket.constants.TimeOfDay;
+
 /**
  * @author jflute
  */
@@ -25,10 +29,6 @@ public class Ticket {
     //                                                                           =========
     private final int displayPrice; // written on ticket, park guest can watch this
     private int canUseCount;
-    private static final int TWO_DAY_CAN_USE = 2;
-    private static final int ONE_DAY_CAN_USE = 1;
-    private static final int FOUR_DAY_CAN_USE = 4;
-    private static final int NIGHT_ONLY_TWO_DAY_CAN_USE = 2;
     private final TicketType ticketType;
 
 
@@ -43,16 +43,16 @@ public class Ticket {
         this.ticketType = ticketType;
         switch (ticketType) {
             case ONE_DAY:
-                this.canUseCount = ONE_DAY_CAN_USE;
+                this.canUseCount = TicketCanUseCount.ONE_DAY_CAN_USE.getCount();
                 break;
             case TWO_DAY:
-                this.canUseCount = TWO_DAY_CAN_USE;
+                this.canUseCount = TicketCanUseCount.TWO_DAY_CAN_USE.getCount();
                 break;
             case FOUR_DAY:
-                this.canUseCount = FOUR_DAY_CAN_USE;
+                this.canUseCount = TicketCanUseCount.FOUR_DAY_CAN_USE.getCount();
                 break;
             case NIGHT_ONLY_TWO_DAY:
-                this.canUseCount = NIGHT_ONLY_TWO_DAY_CAN_USE;
+                this.canUseCount = TicketCanUseCount.NIGHT_ONLY_TWO_DAY_CAN_USE.getCount();
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package org.docksidestage.bizfw.basic.buyticket;
+package org.docksidestage.bizfw.basic.buyticket.constants;
 
 public enum TicketType {
     ONE_DAY,//1日券
