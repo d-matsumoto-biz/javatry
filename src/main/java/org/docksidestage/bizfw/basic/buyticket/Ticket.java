@@ -25,6 +25,9 @@ public class Ticket {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
+    // TODO matsumoto インスタンス変数の定義順序 by jflute (2026/09/30)
+    // 少なくともConstructorでの設定順序に合ってた方が、目視で見合わせやすい。
+    // immutableなものと、mutableなもの、で性質が違うので、そこで分けて並べた方が良いかなと
     private final int displayPrice; // written on ticket, park guest can watch this
     private int canUseCount;
     private final TicketInfo ticketInfo;
@@ -48,6 +51,7 @@ public class Ticket {
     // ===================================================================================
     //                                                                             In Park
     //                                                                             =======
+    // #1on1: いいね、JavaDocしっかりでわかりやすい (2026/09/30)
     /**
      * チケットを使用する ( 利用可能な時間を省略して呼び出し )
      * 利用可能な回数が残っていない、
@@ -89,6 +93,12 @@ public class Ticket {
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
+    // #1on1: getterメソッドのJavaDocジレンマ (2026/09/30)
+    // getterは役割的にわかりきってるところが多いので、まじめに書くと冗長感が出ちゃう。
+    // jfluteは、@returnのみのgetter javadocを書くこともある。
+    // @returnは必ずつけておいて欲しい。そういう枠組みになっているので。
+    // 説明は、getterの場合は説明が不要というレベルなので、そっちを省略する
+    // TODO matsumoto 説明削除で@returnだけで表現するでOK by jflute (2026/09/30)
     /**
      * 表示価格を取得する
      * @return 表示価格
@@ -97,6 +107,9 @@ public class Ticket {
         return displayPrice;
     }
 
+    // #1on1: isAlreadyIn()のメソッド自体は互換性のために残して内部の処理で辻褄合わせしてるのGood (2026/09/30)
+    // TODO matsumoto すでに "すでに入園しているかどうか" という言葉が曖昧になっているので... by jflute (2026/09/30)
+    // 実装は、「チケットを使い切っている」というニュアンスになっているので、JavaDocのコメントもどうにか。
     /**
      * すでに入園しているかどうかを取得する
      * @return すでに入園しているかどうか

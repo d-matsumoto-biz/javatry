@@ -175,6 +175,7 @@ public class Step05ClassTest extends PlainTestCase {
         log(twoDayPassport.isAlreadyIn()); // should be true
     }
 
+    // TODO jflute 次回1on1にて (2026/09/30)
     /**
      * Accurately determine whether type of bought ticket is two-day passport or not by if-statement. (fix Ticket classes if needed) <br>
      * (買ったチケットの種別がTwoDayPassportなのかどうかをif文で正確に判定してみましょう。(必要ならTicketクラスたちを修正))

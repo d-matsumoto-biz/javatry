@@ -44,18 +44,29 @@ public class TicketBooth {
     // you can rewrite comments for your own language by jflute
     // e.g. Japanese
 
+    // TODO matsumoto 共通のprivateメソッドは、Javaの場合わりと下に置くことが多いので移動をお願いします by jflute (2026/09/30)
+    // (基本考え方として、publicが上、privateが下、という慣習がある)
+    // TODO matsumoto 一応基本を考えると、動詞始めりのメソッド名にしておいた方が無難 by jflute (2026/09/30)
+    // e.g. executeTicketTransaction(), beginTicketTransaction(), doBuyPassport() (実処理メソッドみたいなニュアンス)
+    // publicのbuyに対して、doをつけて実処理として区別するみたいな手法。(prefixを分けたい)
     // チケット購入に伴う処理
     private TicketBuyResult ticketTransaction(Integer handedMoney, TicketInfo ticketInfo){
         int price = ticketInfo.getPrice();
         TicketQuantity.isAvailabilityForSale(ticketInfo); // 購入前チェック
         TicketQuantity.checkAndDecreaseQuantity(ticketInfo);
+        // TODO matsumoto salesの処理にresultが関わってないので... by jflute (2026/09/30)
+        // 先にresultをnewしちゃうと、salesの処理にresultが関わっているように見えちゃう。
+        // (戻り値のオブジェクトをあらかじめ用意しておいてわかりやすくする手法もあるが、ここだと中途半端)
+        Ticket ticket = new Ticket(ticketInfo);
         TicketBuyResult result = new TicketBuyResult(ticketInfo);
         if (salesProceeds != null) { // second or more purchase
             salesProceeds = salesProceeds + price;
         } else { // first purchase
             salesProceeds = price;
         }
-        result.setChange(handedMoney - price);
+        int change = handedMoney - price;
+        
+        result.setChange(change);
         return result ;
     }
     // /**
@@ -64,6 +75,8 @@ public class TicketBooth {
     // * @throws TicketSoldOutException ブース内のチケットが売り切れだったら
     // * @throws TicketShortMoneyException 買うのに金額が足りなかったら
     // */
+    // TODO matsumoto 既存のJavaDoc, 有効なので戻り値を追加したのであれば、戻り値の説明を追加で by jflute (2026/09/30)
+    // (日本語で書いてOKですので)
     /**
      * Buy one-day passport, method for park guest.
      * @param handedMoney The money (amount) handed over from park guest. (NotNull, NotMinus)
@@ -71,6 +84,7 @@ public class TicketBooth {
      * @throws TicketShortMoneyException When the specified money is short for purchase.
      */
     public TicketBuyResult buyOneDayPassport(Integer handedMoney) {
+        // TODO matsumoto ShortMoneyの処理もticketTransaction()に入れてもいいかなと by jflute (2026/09/30)
         if (handedMoney < TicketInfo.ONE_DAY.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
@@ -102,6 +116,14 @@ public class TicketBooth {
         return result;
     }
 
+    // #1on1: $問題の形式に合わせて両方のスタイルを残している (2026/09/30)
+    // $下のメソッドだけでいいかなという感覚。
+    // チケット購入処理の本質を捉えて、ひとまとまりにできるというのを考えた素晴らしい。
+    // どっちが正解というわけでもないレベルではあります。
+    // あえてメソッドでチケット種別を表現するスタイルのメリットを挙げるとしたら...
+    // TicketBoothでしか売らないチケット種別を表現することができる。(enumの隠蔽)
+    // そういう意味では、一応メソッドチケット種別スタイルはチケット種別の種類を隠蔽していると言える。
+    // 一方で、enumを階層化して、e.g. BoothableTicketInfo とか作って公開すれば同じこと。
     /**
      * チケットを購入する
      * お金が足りない場合や売り切れの場合はエラーを返す。
