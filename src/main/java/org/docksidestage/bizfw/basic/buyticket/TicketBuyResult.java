@@ -22,7 +22,8 @@ public class TicketBuyResult {
     /**
      * チケット購入結果
      * 購入したチケットの詳細と、お釣りの金額を保持する。
-     * @param ticketInfo
+     * @param ticketInfo 購入するチケット情報
+     * @param change お釣り
      */
     public TicketBuyResult(
             TicketInfo ticketInfo,
