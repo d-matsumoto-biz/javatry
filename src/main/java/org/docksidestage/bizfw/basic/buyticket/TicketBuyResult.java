@@ -3,11 +3,11 @@ package org.docksidestage.bizfw.basic.buyticket;
 import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
 
 public class TicketBuyResult {
-    // TODO matsumoto 戻り値クラスの特性から、できるだけimmutableの方が良いかと by jflute (2026/09/30)
+    // matsumoto 戻り値クラスの特性から、できるだけimmutableの方が良いかと by jflute (2026/09/30)
     // 呼び出し側でsetChange()を呼べないように
     // changeを後からsetする理由がここではないと思うので。
     private final Ticket ticket;
-    private int change;
+    private final int change;
 
     // #1on1: Constructorでどこまで処理するか!? (2026/09/30)
     // ここも慣習的な話にはなって...比較的、Constructorではあまり業務ロジックは入れないのが一般的かなと。
@@ -25,13 +25,14 @@ public class TicketBuyResult {
      * @param ticketInfo
      */
     public TicketBuyResult(
-            TicketInfo ticketInfo
+            TicketInfo ticketInfo,
+            int change
     ){
         this.ticket = new Ticket(ticketInfo);
+        this.change = change;
     }
 
     /**
-     * 購入したチケットを取得する。
      * @return 購入したチケット
      */
     public Ticket getTicket(){
@@ -39,18 +40,9 @@ public class TicketBuyResult {
     }
 
     /**
-     * お釣りの金額を取得する。
      * @return お釣りの金額
      */
     public int getChange(){
         return change;
-    }
-
-    /**
-     * お釣りの金額を設定する。
-     * @param change お釣りの金額
-     */
-    public void setChange(int change){
-        this.change = change;
     }
 }
