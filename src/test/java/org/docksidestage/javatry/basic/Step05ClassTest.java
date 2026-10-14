@@ -175,7 +175,7 @@ public class Step05ClassTest extends PlainTestCase {
         log(twoDayPassport.isAlreadyIn()); // should be true
     }
 
-    // TODO jflute 次回1on1にて (2026/09/30)
+    // done jflute 次回1on1にて (2026/09/30)
     /**
      * Accurately determine whether type of bought ticket is two-day passport or not by if-statement. (fix Ticket classes if needed) <br>
      * (買ったチケットの種別がTwoDayPassportなのかどうかをif文で正確に判定してみましょう。(必要ならTicketクラスたちを修正))
@@ -192,6 +192,12 @@ public class Step05ClassTest extends PlainTestCase {
 
     // uncomment when you implement this exercise
     private void showTicketIfNeeds(Ticket ticket) {
+        // #1on1: いいね、enumで正確に判定できています (2026/10/14)
+        // アンチパターンの紹介:
+        // if (ticket.getDisplayPrice() == 13200) {
+        // if (ticket.getTicketDays() == 2) {
+        // そこから、正確に判定するまでの流れ。
+        // (enumの前に、文字列で何かしら識別コードを持たせての話も)
         switch (ticket.getTicketInfo()) {
         case TWO_DAY:
             log("two-day passport");
@@ -315,4 +321,6 @@ public class Step05ClassTest extends PlainTestCase {
         //log(booth.getQuantity(TicketInfo.NIGHT_ONLY_TWO_DAY));
 
     }
+    
+    // TODO jflute どこかでIntelliJの.idea話をする (2026/10/14)
 }

@@ -1,5 +1,11 @@
 package org.docksidestage.bizfw.basic.buyticket.constants;
 
+// #1on1: クラス名の選択肢、TicketInfo or TicketType (2026/10/14)
+// TicketInfoは比較的幅広い、TicketTypeは種類を示すもうちょい具体的。
+// $内容が変わらないので、TicketTypeの方が実態に合ってるかも。
+// 確かに、enumだから定数的なものしか入ってないので、Infoだと動的な情報も想像しちゃうかも。
+
+// TODO matsumoto こちらもJavaDocをお願いします by jflute (2026/10/14)
 public enum TicketInfo {
     //1日券
     ONE_DAY(
@@ -35,6 +41,7 @@ public enum TicketInfo {
 
     private final int price;
     private final int canUseCount;
+    // TODO matsumoto Timeだと少々曖昧なので、Hourとかにすると正確に表現できる by jflute (2026/10/14)
     private final int entryStartableTime; //簡単のためにLocalDate等は用いない
     private final int maxQuantity;
 

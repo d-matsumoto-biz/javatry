@@ -17,6 +17,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
 
+// TODO matsumoto javadoc, タイトルや説明など、あとauthor by jflute (2026/10/14)
 /**
  * @author jflute
  */
@@ -53,6 +54,10 @@ public class Ticket {
     //                                                                             In Park
     //                                                                             =======
     // #1on1: いいね、JavaDocしっかりでわかりやすい (2026/09/30)
+    // #1on1: いいね、JavaDocで異常系がしっかり書いてあるの良い (2026/10/14)
+    // 異常系を表現する時は、@throwsを使うと良い。
+    // * @throws IllegalStateException 利用可能な回数が残っていない
+    // * @throws IllegalStateException 入園時間の指定がないチケットで呼び出された場合
     /**
      * チケットを使用する ( 利用可能な時間を省略して呼び出し )
      * 利用可能な回数が残っていない、
@@ -63,6 +68,12 @@ public class Ticket {
         if (canUseCount <= 0) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
+        // TODO matsumoto ここの括弧降りてる by jflute (2026/10/14)
+        // #1on1: オールマン、K&Rの話 (2026/10/14)
+        // $既存に合わせるくらいの感じでいいか？
+        // yes, 大概フォーマッターがあるので、それで自然とそうなることも多い。
+        // ちょこっとIntelliJのフォーマッターのお話。
+        // $IntelliJのフォーマッター設定の競合の話。(デフォルトとプラグインで競合したかも)
         if (this.ticketInfo.getEntryStartableTime() != 0)
         {
             throw new IllegalStateException("Time of day is required for this ticket");
@@ -70,6 +81,13 @@ public class Ticket {
         canUseCount--;
     }
 
+    // TODO matsumoto 引数の入園時間、18:30のとき、18を入れるのか？19を入れるのか？ by jflute (2026/10/14)
+    // 明示してあげないと、呼び出し側でブレが発生してしまう可能性がある。
+    // もし今23時間営業を想定すると、23:30で23を入れると入れちゃうから、24じゃないといけない。
+    // すると、18:30も19を入れることになる。切り上げ前提の引数であることをコメントで明示しないと。
+    // TODO matsumoto 修行++: そもそも呼び出し側に固定的な処理をお願いするのであれば... by jflute (2026/10/14)
+    // そもそも doInPark() の中で解決したいところ。そうすれば呼び出し側のブレやミスも無くなる。
+    // だがしかし、それを単純にやると、UnitTestがしづらくなる。ので工夫してみましょう。
     /**
      * チケットを使用する
      * @param time 入園時間

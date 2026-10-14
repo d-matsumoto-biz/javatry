@@ -2,6 +2,12 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
 
+// TODO matsumoto クラスのJavaDoc, 最低限のことは書いていきましょう by jflute (2026/10/14)
+// e.g.
+///**
+// * 購入者に渡すチケットの購入結果
+// * @author matsumoto
+// */
 public class TicketBuyResult {
     // matsumoto 戻り値クラスの特性から、できるだけimmutableの方が良いかと by jflute (2026/09/30)
     // 呼び出し側でsetChange()を呼べないように
@@ -19,6 +25,9 @@ public class TicketBuyResult {
     // Constructorには極力ロジックを入れないスタイルの人も多い。
     // newくらいだったらまあいいけど、お釣りの計算は確実に避けたい。
     // advance: new Ticket()をオーバーライドして拡張させられるようにするってときもTicketBoothがしっくり来る。
+    //
+    // #1on1: @paramの追加いいね (2026/10/14)
+    // 今の時代、コメントしっかり書いておくと、AIがそれを発展させてくれたり読んでくれたりするので費用対効果高い。
     /**
      * チケット購入結果
      * 購入したチケットの詳細と、お釣りの金額を保持する。
