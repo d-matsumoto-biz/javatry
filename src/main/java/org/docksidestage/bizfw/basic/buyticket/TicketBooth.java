@@ -152,12 +152,7 @@ public class TicketBooth {
         return TicketQuantity.getQuantity(ticketInfo);
     }
 
-    public int getTwoDayQuantity(TicketInfo ticketInfo) {
-        return TicketQuantity.getQuantity(ticketInfo);
-    }
-    
     public Integer getSalesProceeds() {
         return salesProceeds;
     }
-
 }
