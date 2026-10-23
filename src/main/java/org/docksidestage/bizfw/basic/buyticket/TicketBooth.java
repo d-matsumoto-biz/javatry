@@ -159,5 +159,4 @@ public class TicketBooth {
     public Integer getSalesProceeds() {
         return salesProceeds;
     }
-
 }
