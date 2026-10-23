@@ -1,10 +1,10 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
-import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
 
 public class TicketPurchaseApplication {
     private final int handedMoney;
-    private final TicketInfo ticketInfo;
+    private final TicketType ticketType;
 
     /**
      * チケット購入申請
@@ -13,10 +13,10 @@ public class TicketPurchaseApplication {
      */
     public TicketPurchaseApplication(
             int handedMoney,
-            TicketInfo ticketInfo
+            TicketType ticketInfo
     ){
         this.handedMoney = handedMoney;
-        this.ticketInfo = ticketInfo;
+        this.ticketType = ticketInfo;
     }
 
     /**
@@ -32,14 +32,14 @@ public class TicketPurchaseApplication {
      * @return チケットの価格
      */
     public int getPrice(){
-        return this.ticketInfo.getPrice();
+        return this.ticketType.getPrice();
     }
 
     /**
      * チケット情報を取得する。
      * @return チケット情報
      */
-    public TicketInfo getTicketInfo(){
-        return ticketInfo;
+    public TicketType getTicketInfo(){
+        return ticketType;
     }
 }

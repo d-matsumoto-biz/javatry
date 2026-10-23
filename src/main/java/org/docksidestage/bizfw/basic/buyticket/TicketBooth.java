@@ -15,7 +15,7 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
 
 /**
  * @author jflute
@@ -61,22 +61,22 @@ public class TicketBooth {
      */
     public TicketBuyResult buyOneDayPassport(Integer handedMoney) {
         // matsumoto ShortMoneyの処理もticketTransaction()に入れてもいいかなと by jflute (2026/09/30)
-        TicketBuyResult result = ticketTransaction(handedMoney, TicketInfo.ONE_DAY);
+        TicketBuyResult result = ticketTransaction(handedMoney, TicketType.ONE_DAY);
         return result;
     }
 
     public TicketBuyResult buyTwoDayPassport(Integer handedMoney){
-        TicketBuyResult result = ticketTransaction(handedMoney, TicketInfo.TWO_DAY);
+        TicketBuyResult result = ticketTransaction(handedMoney, TicketType.TWO_DAY);
         return result;
     }
 
     public TicketBuyResult buyFourDayPassport(Integer handedMoney){
-        TicketBuyResult result = ticketTransaction(handedMoney, TicketInfo.FOUR_DAY);
+        TicketBuyResult result = ticketTransaction(handedMoney, TicketType.FOUR_DAY);
         return result;
     }
 
     public TicketBuyResult buyNightOnlyTwoDayPassport(Integer handedMoney){
-        TicketBuyResult result = ticketTransaction(handedMoney, TicketInfo.NIGHT_ONLY_TWO_DAY);
+        TicketBuyResult result = ticketTransaction(handedMoney, TicketType.NIGHT_ONLY_TWO_DAY);
         return result;
     }
 
@@ -92,11 +92,11 @@ public class TicketBooth {
      * チケットを購入する
      * お金が足りない場合や売り切れの場合はエラーを返す。
      * @param handedMoney 払ったお金
-     * @param ticketInfo 購入するチケットの情報
+     * @param ticketType 購入するチケットの情報
      * @return 購入結果
      */
-    public TicketBuyResult buyPassport(Integer handedMoney, TicketInfo ticketInfo){
-        TicketBuyResult result = ticketTransaction(handedMoney, ticketInfo);
+    public TicketBuyResult buyPassport(Integer handedMoney, TicketType ticketType){
+        TicketBuyResult result = ticketTransaction(handedMoney, ticketType);
         return result;
     }
 
@@ -124,16 +124,16 @@ public class TicketBooth {
     // e.g. executeTicketTransaction(), beginTicketTransaction(), doBuyPassport() (実処理メソッドみたいなニュアンス)
     // publicのbuyに対して、doをつけて実処理として区別するみたいな手法。(prefixを分けたい)
     // チケット購入に伴う処理
-    private TicketBuyResult ticketTransaction(Integer handedMoney, TicketInfo ticketInfo){
+    private TicketBuyResult ticketTransaction(Integer handedMoney, TicketType ticketType){
 
         // お金が足りているか確認
-        int price = ticketInfo.getPrice();
-        if (handedMoney < ticketInfo.getPrice()) {
+        int price = ticketType.getPrice();
+        if (handedMoney < ticketType.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
 
-        TicketQuantity.isAvailabilityForSale(ticketInfo); // 購入前チェック
-        TicketQuantity.checkAndDecreaseQuantity(ticketInfo);
+        TicketQuantity.isAvailabilityForSale(ticketType); // 購入前チェック
+        TicketQuantity.checkAndDecreaseQuantity(ticketType);
         // matsumoto salesの処理にresultが関わってないので... by jflute (2026/09/30)
         // 先にresultをnewしちゃうと、salesの処理にresultが関わっているように見えちゃう。
         // (戻り値のオブジェクトをあらかじめ用意しておいてわかりやすくする手法もあるが、ここだと中途半端)
@@ -142,18 +142,18 @@ public class TicketBooth {
         } else { // first purchase
             salesProceeds = price;
         }
-        return new TicketBuyResult(ticketInfo, handedMoney - price);
+        return new TicketBuyResult(ticketType, handedMoney - price);
     }
 
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
-    public int getQuantity(TicketInfo ticketInfo) {
-        return TicketQuantity.getQuantity(ticketInfo);
+    public int getQuantity(TicketType ticketType) {
+        return TicketQuantity.getQuantity(ticketType);
     }
 
-    public int getTwoDayQuantity(TicketInfo ticketInfo) {
-        return TicketQuantity.getQuantity(ticketInfo);
+    public int getTwoDayQuantity(TicketType ticketType) {
+        return TicketQuantity.getQuantity(ticketType);
     }
     
     public Integer getSalesProceeds() {

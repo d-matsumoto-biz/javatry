@@ -15,11 +15,12 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
-import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
 
-// TODO matsumoto javadoc, タイトルや説明など、あとauthor by jflute (2026/10/14)
+// TODO done matsumoto javadoc, タイトルや説明など、あとauthor by jflute (2026/10/14)
 /**
- * @author jflute
+ * チケットを表現するクラス
+ * チケットは価格、種類、利用可能な回数を持ち、それらに基づいて使用状況を管理する。
  */
 public class Ticket {
 
@@ -30,7 +31,7 @@ public class Ticket {
     // 少なくともConstructorでの設定順序に合ってた方が、目視で見合わせやすい。
     // immutableなものと、mutableなもの、で性質が違うので、そこで分けて並べた方が良いかなと
     private final int displayPrice; // written on ticket, park guest can watch this
-    private final TicketInfo ticketInfo;
+    private final TicketType ticketType;
     private int canUseCount;
 
 
@@ -40,14 +41,14 @@ public class Ticket {
     //                                                                         ===========
     /**
      * チケットの初期化
-     * @param ticketInfo チケット情報
+     * @param ticketType チケット情報
      */
     public Ticket(
-            TicketInfo ticketInfo
+            TicketType ticketType
     ) {
-        this.displayPrice = ticketInfo.getPrice();
-        this.ticketInfo = ticketInfo;
-        this.canUseCount = ticketInfo.getCanUseCount();
+        this.displayPrice = ticketType.getPrice();
+        this.ticketType = ticketType;
+        this.canUseCount = ticketType.getCanUseCount();
     }
 
     // ===================================================================================
@@ -68,20 +69,19 @@ public class Ticket {
         if (canUseCount <= 0) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
-        // TODO matsumoto ここの括弧降りてる by jflute (2026/10/14)
+        // TODO done matsumoto ここの括弧降りてる by jflute (2026/10/14)
         // #1on1: オールマン、K&Rの話 (2026/10/14)
         // $既存に合わせるくらいの感じでいいか？
         // yes, 大概フォーマッターがあるので、それで自然とそうなることも多い。
         // ちょこっとIntelliJのフォーマッターのお話。
         // $IntelliJのフォーマッター設定の競合の話。(デフォルトとプラグインで競合したかも)
-        if (this.ticketInfo.getEntryStartableTime() != 0)
-        {
+        if (this.ticketType.getEntryStartableHour() != 0) {
             throw new IllegalStateException("Time of day is required for this ticket");
         }
         canUseCount--;
     }
 
-    // TODO matsumoto 引数の入園時間、18:30のとき、18を入れるのか？19を入れるのか？ by jflute (2026/10/14)
+    // TODO done matsumoto 引数の入園時間、18:30のとき、18を入れるのか？19を入れるのか？ by jflute (2026/10/14)
     // 明示してあげないと、呼び出し側でブレが発生してしまう可能性がある。
     // もし今23時間営業を想定すると、23:30で23を入れると入れちゃうから、24じゃないといけない。
     // すると、18:30も19を入れることになる。切り上げ前提の引数であることをコメントで明示しないと。
@@ -89,12 +89,11 @@ public class Ticket {
     // そもそも doInPark() の中で解決したいところ。そうすれば呼び出し側のブレやミスも無くなる。
     // だがしかし、それを単純にやると、UnitTestがしづらくなる。ので工夫してみましょう。
     /**
-     * チケットを使用する
-     * @param time 入園時間
-     * 利用可能な時間が制限されているチケットに対応した関数
-     * 利用可能な回数が残っていない
-     * もしくは、利用可能な時間以前での利用の場合はエラーを返します。
-     * (この関数は利用可能な時間が制限されていないチケットでも呼び出し可能)
+     * チケットを使用する。
+     * 利用可能な時間が制限されているチケットに対応したメソッド。
+     * (このメソッドは利用可能な時間が制限されていないチケットでも呼び出し可能)
+     * @param time 入園時間。切り上げで入力してください (ex. 18:30 -> 19)
+     * @throws IllegalStateException 利用可能な回数が残っていない、もしくは利用可能な時間以前での利用の場合
      */
     public void doInPark(int time) {
         if (canUseCount <= 0) {
@@ -103,8 +102,8 @@ public class Ticket {
         if (time < 0 || time > 23) {
             throw new IllegalStateException("The time must be between 0 and 23.");
         }
-        if (this.ticketInfo.getEntryStartableTime() > time) {
-            throw new IllegalStateException("This ticket cannot be used before " + this.ticketInfo.getEntryStartableTime() + " o'clock.");
+        if (this.ticketType.getEntryStartableHour() > time) {
+            throw new IllegalStateException("This ticket cannot be used before " + this.ticketType.getEntryStartableHour() + " o'clock.");
         }
         canUseCount--;
     }
@@ -138,7 +137,7 @@ public class Ticket {
     /**
      * @return チケットの詳細情報
      */
-    public TicketInfo getTicketInfo() {
-        return ticketInfo;
+    public TicketType getTicketInfo() {
+        return ticketType;
     }
 }

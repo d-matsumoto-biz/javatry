@@ -1,13 +1,19 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
-import org.docksidestage.bizfw.basic.buyticket.constants.TicketInfo;
+import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
 
-// TODO matsumoto クラスのJavaDoc, 最低限のことは書いていきましょう by jflute (2026/10/14)
+// TODO done matsumoto クラスのJavaDoc, 最低限のことは書いていきましょう by jflute (2026/10/14)
 // e.g.
 ///**
 // * 購入者に渡すチケットの購入結果
 // * @author matsumoto
 // */
+
+//考えたもののこれ以上は思い浮かびませんでした...
+/**
+ * 購入者に渡すチケットの購入結果
+ * @author daichi.matsumoto
+ */
 public class TicketBuyResult {
     // matsumoto 戻り値クラスの特性から、できるだけimmutableの方が良いかと by jflute (2026/09/30)
     // 呼び出し側でsetChange()を呼べないように
@@ -31,14 +37,14 @@ public class TicketBuyResult {
     /**
      * チケット購入結果
      * 購入したチケットの詳細と、お釣りの金額を保持する。
-     * @param ticketInfo 購入するチケット情報
+     * @param ticketType 購入するチケット情報
      * @param change お釣り
      */
     public TicketBuyResult(
-            TicketInfo ticketInfo,
+            TicketType ticketType,
             int change
     ){
-        this.ticket = new Ticket(ticketInfo);
+        this.ticket = new Ticket(ticketType);
         this.change = change;
     }
 
