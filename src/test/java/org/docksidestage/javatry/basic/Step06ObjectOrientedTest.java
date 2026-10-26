@@ -64,11 +64,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         if (quantity <= 0) {
             throw new IllegalStateException("Sold out");
         }
-        --quantity;
         if (handedMoney < oneDayPrice) {
             throw new IllegalStateException("Short money: handedMoney=" + handedMoney);
         }
-        salesProceeds = handedMoney;
+        --quantity;
+        salesProceeds = oneDayPrice;
 
         //
         // [ticket info]
@@ -93,14 +93,14 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // [final process]
         //
-        saveBuyingHistory(quantity, displayPrice, salesProceeds, alreadyIn);
+        saveBuyingHistory(quantity, salesProceeds ,displayPrice , alreadyIn);
     }
 
     private void saveBuyingHistory(int quantity, Integer salesProceeds, int displayPrice, boolean alreadyIn) {
         if (alreadyIn) {
             // simulation: only logging here (normally e.g. DB insert)
-            showTicketBooth(displayPrice, salesProceeds);
-            showYourTicket(quantity, alreadyIn);
+            showTicketBooth(quantity, salesProceeds);
+            showYourTicket(displayPrice, alreadyIn);
         }
     }
 
@@ -192,7 +192,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     // write your memo here:
     // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
     // what is object?
-    //
+    //データと振る舞いをコード内に散らすことなく１箇所にまとめて管理できる。
+    // 呼び出す側はオブジェクトのできることを知っていれば具体的な処理まで考えないで済む
     // _/_/_/_/_/_/_/_/_/_/
 
     // ===================================================================================
@@ -204,11 +205,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_polymorphism_1st_concreteOnly() {
         Dog dog = new Dog();
-        BarkedSound sound = dog.bark();
+        BarkedSound sound = dog.bark(); // BarkedSound　は吠えた時のワードを保持するためのイミュータブルなクラス HitPointが-3される
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wan
         int land = dog.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -223,16 +224,16 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_objectOriented_polymorphism_3rd_fromMethod() {
-        Animal animal = createAnyAnimal();
-        BarkedSound sound = animal.bark();
-        String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        Animal animal = createAnyAnimal(); //犬
+        BarkedSound sound = animal.bark(); // HitPointが-3
+        String sea = sound.getBarkWord(); // wan
+        log(sea); // your answer? =>  wan
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? =>  7
     }
 
     private Animal createAnyAnimal() {
-        return new Dog();
+        return new Dog(); //新しく作られたインスタンスを返している
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -244,9 +245,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     private void doAnimalSeaLand_for_4th(Animal animal) {
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wan
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -254,19 +255,19 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Animal animal = new Cat();
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => nya-
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 5 行動した際のHitPointが偶数だったらもう一個消費する
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_objectOriented_polymorphism_6th_overriddenWithoutSuper() {
         Animal animal = new Zombie();
-        BarkedSound sound = animal.bark();
+        BarkedSound sound = animal.bark();//ゾンビは行動してもヒットポイントが減らない
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => uooo
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => -1
     }
 
     /**
@@ -277,7 +278,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // write your memo here:
         // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
         // what is happy?
-        //
+        // animalはAnimal型の変数のため、AnimalをextendsしたクラスであればAnimalでできることは呼び出すことができ、
+        // DogやCat側で、Animalのメソッドをオーバーライドできる
         // _/_/_/_/_/_/_/_/_/_/
     }
 
@@ -287,29 +289,29 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_objectOriented_polymorphism_interface_dispatch() {
         Loudable loudable = new Zombie();
-        String sea = loudable.soundLoudly();
-        log(sea); // your answer? => 
-        String land = ((Zombie) loudable).bark().getBarkWord();
-        log(land); // your answer? => 
+        String sea = loudable.soundLoudly();// AnimalがLoudableをimplementsしていてAnimal側でbark().getBarkWord()が実装されている
+        log(sea); // your answer? => uooo
+        String land = ((Zombie) loudable).bark().getBarkWord();//Zonbie型に変えて呼び出してる
+        log(land); // your answer? => uooo
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_objectOriented_polymorphism_interface_hierarchy() {
         Loudable loudable = new AlarmClock();
         String sea = loudable.soundLoudly();
-        log(sea); // your answer? => 
-        boolean land = loudable instanceof Animal;
-        log(land); // your answer? => 
+        log(sea); // your answer? => jiri jiri jiri---
+        boolean land = loudable instanceof Animal;// Animalの型はとってないからFalse
+        log(land); // your answer? => false
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_objectOriented_polymorphism_interface_partImpl() {
         Animal seaAnimal = new Cat();
         Animal landAnimal = new Zombie();
-        boolean sea = seaAnimal instanceof FastRunner;
-        log(sea); // your answer? => 
-        boolean land = landAnimal instanceof FastRunner;
-        log(land); // your answer? => 
+        boolean sea = seaAnimal instanceof FastRunner; //runが実装されているか否か(FastRunnerをimplしてるかどうか) true
+        log(sea); // your answer? => true
+        boolean land = landAnimal instanceof FastRunner;//false
+        log(land); // your answer? => false
     }
 
     /**
@@ -318,6 +320,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_polymorphism_interface_runnerImpl() {
         // your confirmation code here
+        Animal dog = new Dog();
+        log(dog instanceof FastRunner);
     }
 
     /**
@@ -328,7 +332,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // write your memo here:
         // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
         // what is difference?
-        //
+        // 抽象クラスは共通の状態や処理をまとめるもの。共通の状態や処理を持たせ、種類ごとに異なる部分をサブクラスに任せる。
+        // インターフェースは、そのインターフェースを継承したクラスが提供する役割や能力をあらかじめ決めておく。
+        // 継承関係が異なるクラスでも、同じインターフェースを通して共通の操作で扱える。
         // _/_/_/_/_/_/_/_/_/_/
     }
 

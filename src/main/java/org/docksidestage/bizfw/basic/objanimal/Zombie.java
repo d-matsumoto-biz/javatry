@@ -39,7 +39,7 @@ public class Zombie extends Animal {
 
     public static class ZombieDiary {
 
-        private int breatheInCount;
+        private int breatheInCount;//0
 
         public void countBreatheIn() {
             ++breatheInCount;
