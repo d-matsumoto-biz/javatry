@@ -53,7 +53,7 @@ public enum TicketType {
 
     private final int price;
     private final int canUseCount;
-    // TODO done matsumoto Timeだと少々曖昧なので、Hourとかにすると正確に表現できる by jflute (2026/10/14)
+    // done matsumoto Timeだと少々曖昧なので、Hourとかにすると正確に表現できる by jflute (2026/10/14)
     private final int entryStartableHour; //簡単のためにLocalDate等は用いない
     private final int maxQuantity;
 

@@ -125,7 +125,7 @@ public class TicketBooth {
     // publicのbuyに対して、doをつけて実処理として区別するみたいな手法。(prefixを分けたい)
     // チケット購入に伴う処理
     private TicketBuyResult ticketTransaction(Integer handedMoney, TicketType ticketType){
-
+        // TODO matsumoto price変数があるのに使っていないところがある by jflute (2026/10/27)
         // お金が足りているか確認
         int price = ticketType.getPrice();
         if (handedMoney < ticketType.getPrice()) {

@@ -17,7 +17,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
 
-// TODO done matsumoto javadoc, タイトルや説明など、あとauthor by jflute (2026/10/14)
+// done matsumoto javadoc, タイトルや説明など、あとauthor by jflute (2026/10/14)
 /**
  * チケットを表現するクラス
  * チケットは価格、種類、利用可能な回数を持ち、それらに基づいて使用状況を管理する。
@@ -69,7 +69,7 @@ public class Ticket {
         if (canUseCount <= 0) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
-        // TODO done matsumoto ここの括弧降りてる by jflute (2026/10/14)
+        // done matsumoto ここの括弧降りてる by jflute (2026/10/14)
         // #1on1: オールマン、K&Rの話 (2026/10/14)
         // $既存に合わせるくらいの感じでいいか？
         // yes, 大概フォーマッターがあるので、それで自然とそうなることも多い。
@@ -81,7 +81,7 @@ public class Ticket {
         canUseCount--;
     }
 
-    // TODO done matsumoto 引数の入園時間、18:30のとき、18を入れるのか？19を入れるのか？ by jflute (2026/10/14)
+    // done matsumoto 引数の入園時間、18:30のとき、18を入れるのか？19を入れるのか？ by jflute (2026/10/14)
     // 明示してあげないと、呼び出し側でブレが発生してしまう可能性がある。
     // もし今23時間営業を想定すると、23:30で23を入れると入れちゃうから、24じゃないといけない。
     // すると、18:30も19を入れることになる。切り上げ前提の引数であることをコメントで明示しないと。
@@ -102,6 +102,7 @@ public class Ticket {
         if (time < 0 || time > 23) {
             throw new IllegalStateException("The time must be between 0 and 23.");
         }
+        // TODO matsumoto getEntryStartableHour()を変数に切り出した方が見やすくなる by jflute (2026/10/27)
         if (this.ticketType.getEntryStartableHour() > time) {
             throw new IllegalStateException("This ticket cannot be used before " + this.ticketType.getEntryStartableHour() + " o'clock.");
         }
@@ -134,6 +135,7 @@ public class Ticket {
         return canUseCount == 0;
     }
 
+    // TODO matsumoto getTicketInfo() -> getTicketType() by jflute (2026/10/27)
     /**
      * @return チケットの詳細情報
      */

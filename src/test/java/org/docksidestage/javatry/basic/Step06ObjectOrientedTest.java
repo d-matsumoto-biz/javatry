@@ -70,6 +70,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         --quantity;
         salesProceeds = oneDayPrice;
 
+        // TODO matsumoto 間違い、ここからあと２個ある by jflute (2026/10/27)
         //
         // [ticket info]
         //
@@ -90,6 +91,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         }
         alreadyIn = true;
 
+        // TODO jflute 次回以降どこかで、引数多いメソッド話 (2026/10/27)
         //
         // [final process]
         //
@@ -195,7 +197,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     //データと振る舞いをコード内に散らすことなく１箇所にまとめて管理できる。
     // 呼び出す側はオブジェクトのできることを知っていれば具体的な処理まで考えないで済む
     // _/_/_/_/_/_/_/_/_/_/
+    // #1on1: データと振る舞いのまとまりの前に「データ同士の業務的なまとまり」を考えるのも大事 (2026/10/27)
+    // データ同士の業務的なまとまりが正しいか？ここが崩れるとおかしなクラスになりがち。
+    // (そのまとまりがうまくいけば、振る舞いをつけるのはそこまで難しくない)
 
+    // TODO jflute 次回1on1ここから (2026/10/27)
     // ===================================================================================
     //                                                              Polymorphism Beginning
     //                                                              ======================
