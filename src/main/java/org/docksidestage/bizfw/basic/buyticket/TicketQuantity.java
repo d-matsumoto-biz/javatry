@@ -1,6 +1,7 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
 
@@ -12,10 +13,13 @@ import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
 // ここは思考トレーニングのみで。
 // checkAndDecreaseQuantity()のところで、実装イメージも追ってみた。
 
-// TODO matsumoto javadocお願い by jflute (2026/10/27)
+// TODO done matsumoto javadocお願い by jflute (2026/10/27)
+/**
+ * チケットの在庫数を管理するクラス
+ */
 public class TicketQuantity {
-    // TODO matsumoto 具象クラスで扱うのではなく、Map interfaceで取り扱おう by jflute (2026/10/27)
-    private static HashMap<TicketType, Integer> ticketQuantityMap;
+    // TODO done matsumoto 具象クラスで扱うのではなく、Map interfaceで取り扱おう by jflute (2026/10/27)
+    private static Map<TicketType, Integer> ticketQuantityMap;
 
     /**
      * newさせないため
@@ -28,7 +32,7 @@ public class TicketQuantity {
      * @param ticketType チケットの情報
      * @return チケットの在庫数
      */
-    private static HashMap<TicketType, Integer> getInstance(TicketType ticketType) {
+    private static Map<TicketType, Integer> getInstance(TicketType ticketType) {
         if(ticketQuantityMap == null){
             ticketQuantityMap = new HashMap<>();
         }
@@ -43,7 +47,7 @@ public class TicketQuantity {
      * @return 在庫数
      */
     public static int getQuantity(TicketType ticketType) {
-        HashMap<TicketType, Integer> instance = getInstance(ticketType);
+        Map<TicketType, Integer> instance = getInstance(ticketType);
         return instance.get(ticketType);
     }
 
@@ -52,12 +56,12 @@ public class TicketQuantity {
      * @param ticketType チケットの情報
      */
     public static void checkAndDecreaseQuantity(TicketType ticketType) {
-        HashMap<TicketType, Integer> instance = getInstance(ticketType);
-        isAvailabilityForSale(ticketType);
+        Map<TicketType, Integer> instance = getInstance(ticketType);
+        checkAvailabilityForSale(ticketType);
         instance.replace(ticketType, instance.get(ticketType) - 1);
     }
 
-    // TODO matsumoto isだと判定感もあるけどboolean感が強いので... by jflute (2026/10/27)
+    // TODO done matsumoto isだと判定感もあるけどboolean感が強いので... by jflute (2026/10/27)
     // もうちょいthrowしてる感のある名前を付けましょう。
     // e.g. checkSaleAvailable(), checkSoldOut(), (checkQuantity())
     //      assertQuantityExists()
@@ -82,7 +86,7 @@ public class TicketQuantity {
      *
      * @param ticketType 販売可否をチェックするチケットの情報.
      */
-    public static void isAvailabilityForSale(TicketType ticketType) {
+    public static void checkAvailabilityForSale(TicketType ticketType) {
         if(getInstance(ticketType).get(ticketType) <= 0)
             throw new TicketBooth.TicketSoldOutException(ticketType + " is sold out");
     }

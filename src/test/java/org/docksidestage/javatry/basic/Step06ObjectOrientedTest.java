@@ -70,12 +70,12 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         --quantity;
         salesProceeds = oneDayPrice;
 
-        // TODO matsumoto 間違い、ここからあと２個ある by jflute (2026/10/27)
+        // TODO done matsumoto 間違い、ここからあと２個ある by jflute (2026/10/27)
         //
         // [ticket info]
         //
         // simulation: actually these variables should be more wide scope
-        int displayPrice = quantity;
+        int displayPrice = oneDayPrice;
         boolean alreadyIn = false;
 
         // other processes here...
@@ -87,7 +87,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // simulation: actually this process should be called by other trigger
         if (alreadyIn) {
-            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + quantity);
+            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
         }
         alreadyIn = true;
 

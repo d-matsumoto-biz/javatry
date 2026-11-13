@@ -132,7 +132,7 @@ public class TicketBooth {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
 
-        TicketQuantity.isAvailabilityForSale(ticketType); // 購入前チェック
+        TicketQuantity.checkAvailabilityForSale(ticketType); // 購入前チェック
         TicketQuantity.checkAndDecreaseQuantity(ticketType);
         // matsumoto salesの処理にresultが関わってないので... by jflute (2026/09/30)
         // 先にresultをnewしちゃうと、salesの処理にresultが関わっているように見えちゃう。
