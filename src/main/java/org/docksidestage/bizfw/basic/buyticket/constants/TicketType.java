@@ -5,7 +5,8 @@ package org.docksidestage.bizfw.basic.buyticket.constants;
 // $内容が変わらないので、TicketTypeの方が実態に合ってるかも。
 // 確かに、enumだから定数的なものしか入ってないので、Infoだと動的な情報も想像しちゃうかも。
 
-// TODO done matsumoto こちらもJavaDocをお願いします by jflute (2026/10/14)
+// done matsumoto こちらもJavaDocをお願いします by jflute (2026/10/14)
+// TODO matsumoto authorもお願いします by jflute (2026/11/18)
 
 /**
  * チケットの種類とチケットに関する情報
@@ -75,6 +76,10 @@ public enum TicketType {
         this.maxQuantity = maxQuantity;
     }
 
+    // TODO matsumoto getメソッドのJavaDocジレンマ by jflute (2026/11/18)
+    // getメソッドは戻り値を戻すだけがお仕事のメソッドというのが世界的に浸透している。
+    // jfluteだと、概要欄は省略して、@return だけのJavaDocにしたりする。
+    // 別にそれで何か悪いってこともないので。書くことないのに無理に埋めることもない。
     /**
      * チケットの価格を取得する。
      * @return チケットの価格

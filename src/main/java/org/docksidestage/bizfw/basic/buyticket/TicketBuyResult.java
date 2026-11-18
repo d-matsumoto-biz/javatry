@@ -2,7 +2,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 import org.docksidestage.bizfw.basic.buyticket.constants.TicketType;
 
-// TODO done matsumoto クラスのJavaDoc, 最低限のことは書いていきましょう by jflute (2026/10/14)
+// done matsumoto クラスのJavaDoc, 最低限のことは書いていきましょう by jflute (2026/10/14)
 // e.g.
 ///**
 // * 購入者に渡すチケットの購入結果
